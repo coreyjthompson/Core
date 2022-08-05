@@ -1,0 +1,156 @@
+/*------------------------------------------------------------------
+  [Forms]
+*/
+input.e-input, .e-input-group input.e-input,
+.e-input-group input, .e-input-group.e-control-wrapper input.e-input,
+.e-input-group.e-control-wrapper input, .e-float-input input,
+.e-float-input.e-input-group input, .e-float-input.e-control-wrapper input,
+.e-float-input.e-control-wrapper.e-input-group input, .e-input-group,
+.e-input-group.e-control-wrapper, .e-float-input,
+.e-float-input.e-control-wrapper {
+    border-radius: $border-radius;
+}
+
+.e-float-input, .e-float-input.e-control-wrapper,
+.e-float-input.e-disabled, .e-float-input.e-control-wrapper.e-disabled,
+.e-float-input.e-input-group.e-disabled, .e-float-input.e-input-group.e-control-wrapper.e-disabled {
+    font-family: $font-family-sans-serif;
+    font-size: $input-font-size;
+    font-weight: $font-weight-normal;
+}
+
+.e-float-input input, .e-float-input textarea,
+.e-float-input.e-control-wrapper input, .e-float-input.e-control-wrapper textarea {
+    border: 0 solid;
+    border-width: $input-btn-border-width;
+    display: block;
+    font: inherit;
+    font-style: inherit;
+    font-variant-ligatures: inherit;
+    font-variant-caps: inherit;
+    font-variant-numeric: inherit;
+    font-variant-east-asian: inherit;
+    font-weight: $font-weight-normal;
+    font-stretch: inherit;
+    font-size: $input-font-size;
+    line-height: inherit;
+    font-family: $font-family-sans-serif;
+    width: 100%;
+}
+
+label.e-float-text, .e-float-input label.e-float-text,
+.e-float-input.e-control-wrapper label.e-float-text {
+    font-family: $font-family-sans-serif;
+}
+
+label.e-float-text, .e-float-input label.e-float-text, 
+.e-float-input.e-control-wrapper label.e-float-text, 
+.e-float-input input:not(:focus):valid ~ label.e-float-text.e-label-bottom, 
+.e-float-input.e-control-wrapper input:not(:focus):valid ~ label.e-float-text.e-label-bottom {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    left: 0;
+    overflow: hidden;
+    padding-left: 10px;
+    pointer-events: none;
+    position: absolute;
+    text-overflow: ellipsis;
+    top: -11px;
+    transform: translate3d(0, 16px, 0) scale(1);
+    transform-origin: left top;
+    transition: 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    white-space: nowrap;
+    width: 100%;
+}
+
+.e-input-group input.e-input, .e-input-group.e-control-wrapper input.e-input,
+.e-input-group textarea.e-input, .e-input-group.e-control-wrapper textarea.e-input {
+    border-color: $input-border-color;
+    border-top-color: $input-top-border;
+
+    &::placeholder {
+        color: $input-placeholder-color;
+        font-weight: $font-weight-normal;
+    }
+}
+
+.e-input-group:not(.e-success):not(.e-warning):not(.e-error),
+.e-input-group.e-control-wrapper:not(.e-success):not(.e-warning):not(.e-error) {
+    border-color: $input-border-color;
+    border-top-color: $input-top-border;
+}
+
+.e-input-group:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-input-group.e-control-wrapper:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]),
+.e-float-input.e-control-wrapper:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-control-wrapper:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input.e-control-wrapper:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]) {
+    border-color: $input-border-color;
+    border-top-color: $input-top-border;
+}
+
+input.e-input, .e-input-group input.e-input,
+.e-input-group input, 
+.e-input-group.e-control-wrapper input.e-input,
+.e-input-group.e-control-wrapper input, 
+.e-float-input input.e-input,
+.e-float-input input, 
+.e-float-input.e-control-wrapper input.e-input,
+.e-float-input.e-control-wrapper input, 
+.e-input-group input.e-input:focus,
+.e-input-group.e-control-wrapper input.e-input:focus, 
+.e-float-input.e-control-wrapper input:focus,
+.e-float-input input:focus {
+    padding: $input-padding-y $input-padding-x;
+    text-indent: 0;
+}
+
+input.e-input,
+.e-input-group input,
+.e-input-group.e-control-wrapper input,
+.e-input-group input.e-input,
+.e-input-group.e-control-wrapper input.e-input {
+    height: $input-height;
+}
+
+.e-input-group.e-input-focus:not(.e-success):not(.e-warning):not(.e-error),
+.e-input-group.e-control-wrapper.e-input-focus:not(.e-success):not(.e-warning):not(.e-error) {
+    border-color: $input-focus-border-color;
+}
+
+.e-input-group.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-input-group.e-control-wrapper.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled),
+.e-float-input.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) input:not([disabled]),
+.e-float-input.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]),
+.e-float-input.e-control-wrapper.e-input-focus:hover:not(.e-input-group):not(.e-success):not(.e-warning):not(.e-error):not(.e-disabled) textarea:not([disabled]) {
+    border-color: $input-focus-border-color;
+}
+
+textarea.e-input,
+.e-input-group textarea,
+.e-input-group textarea.e-input,
+.e-input-group.e-input-focus textarea,
+.e-input-group.e-input-focus textarea.e-input,
+.e-input-group.e-control-wrapper textarea,
+.e-input-group.e-control-wrapper.e-input-focus textarea,
+.e-input-group.e-control-wrapper textarea.e-input,
+.e-input-group.e-control-wrapper.e-input-focus textarea.e-input,
+.e-float-input textarea,
+.e-float-input.e-control-wrapper textarea {
+    line-height: $input-line-height;
+    min-height: $input-height;
+    min-width: 0;
+    padding: $input-padding-y $input-padding-x;
+    resize: vertical;
+}

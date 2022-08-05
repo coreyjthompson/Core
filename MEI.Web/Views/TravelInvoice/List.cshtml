@@ -1,0 +1,37 @@
+﻿@using MEI.Core.DomainModels.Travel
+@model MEI.Web.Models.TravelInvoice.ListViewModel;
+@{
+    ViewData["Title"] = "Travel Invoices";
+}
+<h1>@ViewData["Title"]</h1>
+
+<ul>
+    @foreach (Invoice item in Model.Invoices)
+    {
+        <li>
+            @(item.Id + " - " + item.Client.Name);
+        </li>
+    }
+</ul>
+
+<button id="btnTest1">Test</button>
+
+@section ScriptSection
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('btnTest1').click(function() {
+                $.ajax({
+                    url: '@Url.Action("TestUsingQuery", "TravelInvoice")',
+                    type: "GET",
+                    dataType: "json",
+                    success: function(list) {
+                        if (list) {
+                        }
+                    },
+                    error: function(response) {
+                    }});
+            });
+        });
+    </script>
+}

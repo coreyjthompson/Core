@@ -1,0 +1,87 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyVersion>0.0.1.0</AssemblyVersion>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.0.1</Version>
+    <Description>Domain models, repository interfaces, and service interfaces of the MEI Enterprise.</Description>
+    <Authors>Jason Nichols</Authors>
+    <Company>Meetings &amp; Events International</Company>
+    <Copyright>Copyright ©2019 Meetings &amp; Events International</Copyright>
+    <FileVersion>0.0.1.0</FileVersion>
+    <PackageReleaseNotes>0.0.1 - Initital release with only example domain models for Attendee and Program. The ICloseOutService class is also only for example purposes.</PackageReleaseNotes>
+    <PackageTags>domainmodel repository repositories services servicelayer</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\Data\Migrations\20190819200857_UpdateWorkflowStepModelStep.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190819200857_UpdateWorkflowStepModelStep.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190820211247_UpdateInvoiceAmount.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190820211247_UpdateInvoiceAmount.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190827191117_ChangeInvoiceWorkflowModelName.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190827191117_ChangeInvoiceWorkflowModelName.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190828140618_AddStatusesToInvoiceModel.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190828140618_AddStatusesToInvoiceModel.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190828201224_UpdatedPropertyNameOnClientModel2.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190828201224_UpdatedPropertyNameOnClientModel2.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190904151532_AddConsultantModel.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190904151532_AddConsultantModel.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190904152202_AddConsultantModel.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20190904152202_AddConsultantModel.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212151219_AddInitialTemporalTables.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212151219_AddInitialTemporalTables.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212161154_AddedWhenInactivatedToAgencyServiceModel.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212161154_AddedWhenInactivatedToAgencyServiceModel.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212161310_test.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212161310_test.Designer.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212170223_UpdateAgencyServiceId.cs" />
+    <Compile Remove="Infrastructure\Data\Migrations\20191212170223_UpdateAgencyServiceId.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\..\.nuget\packages\mei.logging\2.2.0\contentFiles\any\any\NLog.config" Link="Infrastructure\NLog.config">
+      <Private>True</Private>
+      <NuGetPackageVersion>2.2.0</NuGetPackageVersion>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <NuGetItemType>Content</NuGetItemType>
+      <TargetPath>NLog.config</TargetPath>
+      <NuGetPackageId>MEI.Logging</NuGetPackageId>
+    </Content>
+    <Content Include="..\..\..\..\.nuget\packages\mei.logging\2.2.0\contentFiles\any\any\NLog.xsd" Link="Infrastructure\NLog.xsd">
+      <Private>True</Private>
+      <NuGetPackageVersion>2.2.0</NuGetPackageVersion>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <NuGetItemType>Content</NuGetItemType>
+      <TargetPath>NLog.xsd</TargetPath>
+      <NuGetPackageId>MEI.Logging</NuGetPackageId>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="3.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="LazyCache.AspNetCore" Version="2.0.1" />
+    <PackageReference Include="MEI.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Windows.Compatibility" Version="3.1.0" />
+    <PackageReference Include="NodaTime" Version="3.0.0-beta01" />
+    <PackageReference Include="Scrutor" Version="3.1.0" />
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.7.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.7.0" />
+  </ItemGroup>
+
+</Project>

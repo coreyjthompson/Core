@@ -1,0 +1,52 @@
+﻿@model MEI.Web.Models.Client.FormViewModel
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_name" name="ClientForm.Name" placeholder="Company Name" floatLabelType="Never" ejs-for="@Model.Name" class="form-control"></ejs-textbox>
+    <div>
+        <span asp-validation-for="Name"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_address1" name="ClientForm.StreetAddressLine1" placeholder="Address" floatLabelType="Never" ejs-for="@Model.StreetAddressLine1" class="form-control"></ejs-textbox>
+    <div>
+        <span asp-validation-for="StreetAddressLine1"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_address2" name="ClientForm.StreetAddressLine2" floatLabelType="Never" ejs-for="@Model.StreetAddressLine2" class="form-control"></ejs-textbox>
+    <div>
+        <span asp-validation-for="StreetAddressLine2"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_city" name="ClientForm.CityTown" placeholder="City/Town" floatLabelType="Never" ejs-for="@Model.CityTown" class="form-control"></ejs-textbox>
+    <div>
+        <span asp-validation-for="CityTown"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-autocomplete id="clients_form_state" dataSource="@Model.StateProvince" ejs-for="StateProvince" autofill="true" name="ClientForm.StateProvince" filtering="filteringStates" placeholder="State/Province" change="setStateName" class="form-control">
+        <e-autocomplete-fields value="Value" text="Text"></e-autocomplete-fields>
+    </ejs-autocomplete>
+    <div>
+        <span asp-validation-for="StateProvince"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_postal" name="ClientForm.PostalCode" placeholder="Postal Code" floatLabelType="Never" ejs-for="@Model.PostalCode" class="form-control"></ejs-textbox>
+    <div >
+        <span asp-validation-for="PostalCode"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_phone" name="ClientForm.TollFreePhoneNumber" placeholder="Phone" floatLabelType="Never" ejs-for="@Model.TollFreePhoneNumber" class="form-control"></ejs-textbox>
+    <div>
+        <span asp-validation-for="TollFreePhoneNumber"></span>
+    </div>
+</div>
+<div class="form-group">
+    <ejs-textbox id="clients_form_website" name="ClientForm.WebsiteUrl" placeholder="Website" floatLabelType="Never" ejs-for="@Model.WebsiteUrl" class="form-control"></ejs-textbox>
+    <div >
+        <span asp-validation-for="WebsiteUrl"></span>
+    </div>
+</div>

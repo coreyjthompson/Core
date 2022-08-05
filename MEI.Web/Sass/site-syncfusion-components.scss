@@ -1,0 +1,55 @@
+// Functions
+@import "includes/functions/opposite-direction";
+@import "includes/functions/color-correction";
+
+// Variables
+@import "config/custom-variables-syncfusion";
+
+// Bootstrap mixins
+@import "../node_modules/bootstrap/scss/mixins";
+
+// Bootstrap Reset and dependencies
+@import "../node_modules/bootstrap/scss/print";
+
+// Bootstrap Utility classes
+@import "../node_modules/bootstrap/scss/utilities";
+
+// Syncfusion components
+@import "config/syncfusion-components";
+
+// Fonts
+@import "includes/fonts/roboto";
+
+// Forms
+@import "includes/syncfusion/mixins/buttons";
+@import "includes/syncfusion/mixins/tables";
+@import "includes/syncfusion/mixins/modals";
+@import "includes/syncfusion/mixins/dropdown";
+@import "includes/syncfusion/mixins/badges";
+@import "includes/syncfusion/mixins/tabs";
+@import "includes/syncfusion/mixins/forms";
+
+@import "includes/syncfusion/images";
+@import "includes/syncfusion/buttons";
+@import "includes/syncfusion/button-group";
+@import "includes/syncfusion/dropdowns"; 
+@import "includes/syncfusion/tabs";
+@import "includes/syncfusion/tooltip";
+@import "includes/syncfusion/modals";
+@import "includes/syncfusion/tables";
+@import "includes/syncfusion/badges";
+@import "includes/syncfusion/list-group";
+@import "includes/syncfusion/progress-bars";
+@import "includes/syncfusion/pagination";
+@import "includes/syncfusion/forms";
+@import "includes/syncfusion/input-groups";
+
+
+
+
+
+
+
+
+
+

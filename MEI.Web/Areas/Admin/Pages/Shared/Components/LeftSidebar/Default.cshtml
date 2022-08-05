@@ -1,0 +1,58 @@
+﻿@model MEI.Web.Models.Shared.LeftSidebarViewModel
+<!--- left sidebar -->
+<div class="be-left-sidebar">
+        <div class="left-sidebar-wrapper">
+            <a class="left-sidebar-toggle" href="#">Blank Page</a>
+            <div class="left-sidebar-spacer">
+                <div class="left-sidebar-scroll">
+                    <div class="left-sidebar-content">
+                        <ul class="sidebar-elements">
+                            <li class="divider">Agent Menu</li>
+                            <li class="@Model.GetCss("Dashboard")">
+                                <a asp-area="Travel" asp-page="/Index">Dashboard</a>
+                            </li>
+                            <li class="@Model.GetCss("Initial Travel Request")">
+                                <a asp-area="Travel" asp-page="/Queues/InitialTravelRequest">@*<span class="badge badge-primary float-right">40</span>*@Initial Travel Request</a>
+                            </li>
+                            <li class="@Model.GetCss("Outreach")">
+                                <a asp-area="Travel" asp-page="/Queues/Outreach">@*<span class="badge badge-primary float-right">2</span>*@Outreach</a>
+                            </li>
+                            <li class="@Model.GetCss("Awaiting Speaker Response")">
+                                <a asp-area="Travel" asp-page="/Queues/AwaitingSpeakerResponse">@*<span class="badge badge-primary float-right">10</span>*@Awaiting Speaker Response</a>
+                            </li>
+                            <li class="@Model.GetCss("Booking")">
+                                <a asp-area="Travel" asp-page="/Queues/AwaitingSpeakerResponse">@*<span class="badge badge-primary float-right">10</span>*@Booking</a>
+                            </li>
+                            <li class="@Model.GetCss("Program Changes")">
+                                <a asp-area="Travel" asp-page="/Queues/AwaitingSpeakerResponse">@*<span class="badge badge-primary float-right">10</span>*@Program Changes</a>
+                            </li>
+                            <li class="@Model.GetCss("No Travel")">
+                                <a asp-area="Travel" asp-page="/Queues/AwaitingSpeakerResponse">No Travel/Completed</a>
+                            </li>
+                            <li class="@Model.GetCss("Invoices") nav-group">
+                                <a asp-area="Travel" asp-page="/Invoices/Index" class="nav-group-link">@*<span class="badge badge-primary float-right">10</span>*@Invoices</a>
+                                <a asp-area="Travel" asp-page="/Invoices/Create" class="nav-group-button nav-group-icon"><i class="icon mdi mdi-plus"></i></a>
+                            </li>
+                            <li class="divider">Manager Menu</li>
+                            <li class="@Model.GetCss("Agents") nav-group">
+                                <a asp-area="Travel" asp-page="/Agents/Index" class="nav-group-link">Agents</a>
+                            </li>
+
+                            <li class="parent">
+                                <a href="#"><span>Nav with Children</span></a>
+                                <ul class="sub-menu">
+                                    <li class="@Model.GetCss("Child 1")">
+                                        <a href="#">Child 1</a>
+                                    </li>
+                                    <li class="@Model.GetCss("Child 2")">
+                                        <a href="#">Child 2</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<!---/ left sidebar -->

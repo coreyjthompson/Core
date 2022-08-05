@@ -1,0 +1,379 @@
+﻿@page
+@using Syncfusion.EJ2.Charts
+@model MEI.Web.Areas.Travel.Pages.IndexModel
+
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Dashboard";
+}
+
+@section PageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">Dashboard</h2>
+        </div>
+    </div>
+}
+
+<div class="dashboard-container">
+    <div class="row d-flex align-items-stretch">
+        <div class="col-6 col-lg-7">
+            <div id="dashboard_widget_assignedTasks" class="card card-table" data-row="0" data-col="0" data-sizeX="3" data-sizeY="2" data-maxSizeY="2" data-minSizeY="2" data-maxSizeX="3" data-minSizeX="3">
+                <div class="card-header">
+                    <div class="tools dropdown">
+                        <span class="icon mdi mdi-download"></span>
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <span class="icon mdi mdi-more-vert"></span>
+                        </a>
+                        <div class="dropdown-menu" role="menu" x-placement="top-start" style="left: 0px; position: absolute; top: 0px; transform: translate3d(20px, -166px, 0px); will-change: transform;">
+                            <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                    </div>
+                    <div class="title">Assigned Tasks</div>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" id="dashboard_widget_assignedTasks_out"/>
+                    <div class="dd" id="dashboard_widget_assignedTasks_list">
+                        <ol class="dd-list">
+                            @foreach (var item in Model.AssignedTasks)
+                            {
+                                <li class="dd-item" data-id="@item.Id">
+                                    <div class="dd-handle">
+                                        <div class="e-icons e-rowcelldrag e-dtdiagonalright e-icon-rowdragicon"></div>
+                                    </div>
+                                    <div class="dd-content">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h4 class="mt-0">@item.Title</h4>
+                                                <span>Status: @item.Status</span>
+                                            </div>
+                                            <div class="col">
+                                                <span class="text-danger">@item.DaysOutMessage</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div id="dashboard_widget_recentActivity" class="widget be-loading" data-row="0" data-col="3" data-sizeX="2" data-sizeY="2">
+                <div class="widget-header">
+                    <div class="tools">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="icon mdi mdi-more-vert d-inline-block d-md-none"></span>
+                            </a>
+                            <div class="dropdown-menu" role="menu">
+                                <a class="dropdown-item" href="#">Week</a><a class="dropdown-item" href="#">Month</a><a class="dropdown-item" href="#">Year</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Today</a>
+                            </div>
+                        </div><span class="icon mdi mdi-chevron-down"></span><span class="icon toggle-loading mdi mdi-refresh-sync"></span><span class="icon mdi mdi-close"></span>
+                    </div>
+                    <div class="title">Recent Activity</div>
+                </div>
+                <div class="widget-body">
+                    <ul class="user-timeline user-timeline-compact">
+                        <li class="latest">
+                            <div class="user-timeline-title">Initial Travel Request</div>
+                            <div class="user-timeline-description">Rhonda Simpson assigned you to <a href="#">Julie Weatherly - Ruth’s Chris Steak House - DEF04-DM01-19</a>.</div>
+                            <div class="user-timeline-date">
+                                <small>Just Now</small>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">Outreach</div>
+                            <div class="user-timeline-description">You changed the status of <a href="#">Michael Schmidt - Flemming’s Prime Steakhouse - DEE02-DM02-19</a> to <span class="text-warning">Outreach</span>.</div>
+                            <div class="user-timeline-date">
+                                <small>Today - 3:35 PM</small>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">Initial Travel Request</div>
+                            <div class="user-timeline-description">Rhonda Simpson assigned you to <a href="#">Matt Overton - Office of Dr. Overton - ILL03-GO02-19</a>.</div>
+                            <div class="user-timeline-date">
+                                <small>Yesterday - 3:02 PM</small>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">No Travel/Completed</div>
+                            <div class="user-timeline-description">You changed the status of <a href="#">Debra Baggins - Biaggi’s Italiano - ILK34-GD01-19</a> to <span class="text-success">No Travel / Completed</span>.</div>
+                            <div class="user-timeline-date">
+                                <span>Yesterday - 10:41 AM</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col">
+            <div id="dashboard_widget_chart" class="widget widget-fullwidth be-loading" data-row="2" data-col="0" data-sizeX="5" data-sizeY="2">
+                <div class="widget-header">
+                    <div class="tools">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="icon mdi mdi-more-vert d-inline-block d-md-none"></span>
+                            </a>
+                            <div class="dropdown-menu" role="menu">
+                                <a class="dropdown-item" href="#">Week</a><a class="dropdown-item" href="#">Month</a><a class="dropdown-item" href="#">Year</a>
+                                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Today</a>
+                            </div>
+                        </div><span class="icon mdi mdi-chevron-down"></span><span class="icon toggle-loading mdi mdi-refresh-sync"></span><span class="icon mdi mdi-close"></span>
+                    </div>
+                    <div class="title">Travel Requests 2018</div>
+                </div>
+                <div class="widget-chart-container">
+                    <div class="widget-chart-info">
+                        <ul class="chart-legend-horizontal">
+                            <li><span data-color="main-chart-color1" style="background-color: #00bdae;"></span> ABBVIE</li>
+                            <li><span data-color="main-chart-color2" style="background-color: #404041;"></span> EXACT SCIENCES</li>
+                            <li><span data-color="main-chart-color3" style="background-color: #357cd2;"></span> ANCE</li>
+                        </ul>
+                    </div>
+                    <div class="widget-counter-group widget-counter-group-right">
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client1Avg</div>
+                            <div class="desc">AbbVie</div>
+                        </div>
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client2Avg</div>
+                            <div class="desc">Exact Sciences</div>
+                        </div>
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client3Avg</div>
+                            <div class="desc">ANCE</div>
+                        </div>
+                    </div>
+                    <div class="text-center" align="center">
+                        <ejs-chart id="lineContainer">
+                            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+                            <e-chart-primaryxaxis valueType="Category" labelFormat="y" interval="1" edgeLabelPlacement="Hide">
+                                <e-majorgridlines width="0"></e-majorgridlines>
+                            </e-chart-primaryxaxis>
+                            <e-chart-primaryyaxis minimum="0" maximum="100" interval="1" labelFormat="{value}%" visible="false">
+                                <e-linestyle width="0"></e-linestyle>
+                                <e-majorticklines width="0"></e-majorticklines>
+                            </e-chart-primaryyaxis>
+                            <e-chart-chartarea>
+                                <e-chartarea-border width="0"></e-chartarea-border>
+
+                            </e-chart-chartarea>
+                            <e-series-collection>
+                                <e-series dataSource="Model.DemoChartData" name="AbbVie" xName="xValue" opacity="0.75" width="2" yName="yValue" type="@ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                                <e-series dataSource="Model.DemoChartData" name="Exact Sciences" xName="xValue" opacity="0.75" width="2" yName="yValue1" type="@ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                                <e-series dataSource="Model.DemoChartData" name="ANCE" xName="xValue" opacity="0.75" width="2" yName="yValue2" type="@ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                            </e-series-collection>
+                        </ejs-chart>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @*<ejs-dashboardlayout id="dashboard_training_layout" columns="5" allowResizing="false" allowDragging="false" cellSpacing="@Model.Spacing.CellSpacing">
+        <e-content-template>
+            <div id="dashboard_widget_assignedTasks" class="e-panel card card-table widget" data-row="0" data-col="0" data-sizeX="3" data-sizeY="2" data-maxSizeY="2" data-minSizeY="2" data-maxSizeX="3" data-minSizeX="3">
+                <div class="e-panel-header card-header">
+                    <div class="tools dropdown">
+                        <span class="icon mdi mdi-download"></span>
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <span class="icon mdi mdi-more-vert"></span>
+                        </a>
+                        <div class="dropdown-menu" role="menu" x-placement="top-start" style="position: absolute; transform: translate3d(20px, -166px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                        <span class="icon mdi mdi-close"></span>
+                    </div>
+                    <div class="title">Assigned Tasks</div>
+                </div>
+                <div class="e-panel-container card-body">
+                    <input type="hidden" id="dashboard_widget_assignedTasks_out" />
+                    <div class="dd" id="dashboard_widget_assignedTasks_list">
+                        <ol class="dd-list">
+                            @foreach (var item in Model.AssignedTasks)
+                            {
+                                <li class="dd-item" data-id="@item.Id">
+                                    <div class="dd-handle">
+                                        <div class="e-icons e-rowcelldrag e-dtdiagonalright e-icon-rowdragicon"></div>
+                                    </div>
+                                    <div class="dd-content">
+                                        <div class="row">
+                                            <div class="col-9">
+                                                <h4 class="mt-0">@item.Title</h4>
+                                                <span>Status: @item.Status</span>
+                                            </div>
+                                            <div class="col">
+                                                <span class="text-danger">@item.DaysOutMessage</span>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </li>
+                            }
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div id="dashboard_widget_recentActivity" class="e-panel card widget" data-row="0" data-col="3" data-sizeX="2" data-sizeY="2">
+                <div class="e-panel-header card-header">
+                    <div class="tools dropdown">
+                        <span class="icon mdi mdi-download"></span>
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <span class="icon mdi mdi-more-vert"></span>
+                        </a>
+                        <div class="dropdown-menu" role="menu" x-placement="top-start" style="position: absolute; transform: translate3d(20px, -166px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                        <span class="icon mdi mdi-close"></span>
+                    </div>
+                    <div class="title">Recent Activity</div>
+                </div>
+                <div class="e-panel-container card-body">
+                    <ul class="user-timeline user-timeline-compact">
+                        <li class="latest">
+                            <div class="user-timeline-title">Initial Travel Request</div>
+                            <div class="user-timeline-description">Rhonda Simpson assigned you to <a href="#">Julie Weatherly - Ruth’s Chris Steak House - DEF04-DM01-19</a>.</div>
+                            <div class="user-timeline-date"><small>Just Now</small></div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">Outreach</div>
+                            <div class="user-timeline-description">You changed the status of <a href="#">Michael Schmidt - Flemming’s Prime Steakhouse - DEE02-DM02-19</a> to <span class="text-warning">Outreach</span>.</div>
+                            <div class="user-timeline-date"><small>Today - 3:35 PM</small></div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">Initial Travel Request</div>
+                            <div class="user-timeline-description">Rhonda Simpson assigned you to <a href="#">Matt Overton - Office of Dr. Overton - ILL03-GO02-19</a>.</div>
+                            <div class="user-timeline-date"><small>Yesterday - 3:02 PM</small></div>
+                        </li>
+                        <li>
+                            <div class="user-timeline-title">No Travel/Completed</div>
+                            <div class="user-timeline-description">You changed the status of <a href="#">Debra Baggins - Biaggi’s Italiano - ILK34-GD01-19</a> to <span class="text-success">No Travel / Completed</span>.</div>
+                            <div class="user-timeline-date"><span>Yesterday - 10:41 AM</span></div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div id="eight" class="e-panel card card-table widget widget-fullwidth" data-row="2" data-col="0" data-sizeX="5" data-sizeY="2">
+                <div class="e-panel-header card-header widget-head">
+                    <div class="tools dropdown">
+                        <span class="icon mdi mdi-download"></span>
+                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+                            <span class="icon mdi mdi-more-vert"></span>
+                        </a>
+                        <div class="dropdown-menu" role="menu" x-placement="top-start" style="position: absolute; transform: translate3d(20px, -166px, 0px); top: 0px; left: 0px; will-change: transform;">
+                            <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                        </div>
+                        <span class="icon mdi mdi-close"></span>
+                    </div>
+                    <div class="title">Travel Requests 2018</div>
+                </div>
+                <div class="e-panel-container card-body widget-chart-container px-1">
+                    <div class="widget-chart-info">
+                        <ul class="chart-legend-horizontal">
+                            <li><span data-color="main-chart-color1" style="background-color: #00bdae;"></span> ABBVIE</li>
+                            <li><span data-color="main-chart-color2" style="background-color: #404041;"></span> EXACT SCIENCES</li>
+                            <li><span data-color="main-chart-color3" style="background-color: #357cd2;"></span> ANCE</li>
+                        </ul>
+                    </div>
+                    <div class="widget-counter-group widget-counter-group-right">
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client1Avg</div>
+                            <div class="desc">AbbVie</div>
+                        </div>
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client2Avg</div>
+                            <div class="desc">Exact Sciences</div>
+                        </div>
+                        <div class="counter counter-big">
+                            <div class="value">@Model.Client3Avg</div>
+                            <div class="desc">ANCE</div>
+                        </div>
+                    </div>
+                    <div class="text-center" align="center">
+                        <ejs-chart id="lineContainer">
+                            <e-chart-legendsettings visible="false"></e-chart-legendsettings>
+                            <e-chart-tooltipsettings enable="true"></e-chart-tooltipsettings>
+                            <e-chart-primaryxaxis valueType="Category" labelFormat="y" interval="1" edgeLabelPlacement="Hide">
+                                <e-majorgridlines width="0"></e-majorgridlines>
+                            </e-chart-primaryxaxis>
+                            <e-chart-primaryyaxis minimum="0" maximum="100" interval="1" labelFormat="{value}%" visible="false">
+                                <e-linestyle width="0"></e-linestyle>
+                                <e-majorticklines width="0"></e-majorticklines>
+                            </e-chart-primaryyaxis>
+                            <e-chart-chartarea>
+                                <e-chartarea-border width="0"></e-chartarea-border>
+
+                            </e-chart-chartarea>
+                            <e-series-collection>
+                                <e-series dataSource="Model.DemoChartData" name="AbbVie" xName="xValue" opacity="0.75" width=2 yName="yValue" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                                <e-series dataSource="Model.DemoChartData" name="Exact Sciences" xName="xValue" opacity="0.75" width="2" yName="yValue1" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                                <e-series dataSource="Model.DemoChartData" name="ANCE" xName="xValue" opacity="0.75" width="2" yName="yValue2" type="@Syncfusion.EJ2.Charts.ChartSeriesType.SplineArea">
+                                    <e-series-marker visible="true" height="10" width="10"></e-series-marker>
+                                </e-series>
+                            </e-series-collection>
+                        </ejs-chart>
+                    </div>
+                </div>
+            </div>
+        </e-content-template>
+    </ejs-dashboardlayout>*@
+</div>
+
+@section ScriptSection {
+    <script src="~/lib/jquery-nestable/jquery.nestable.js" type="text/javascript"></script>
+    <script id="columnTemplate" type="text/x-template">
+        <div class="image">
+            <img src="@Url.Content("~/scripts/Images/Employees/${EmployeeID}.png")" alt="${EmployeeID}" />
+        </div>
+    </script>
+
+    <script id="dashboard_widget_assignedTasks_grid_columnTemplate1" type="text/x-template">
+        <div class="p-2">
+            <span>${ConsultantName} - ${LocationName} - ${ProgramGuid}</span><br />
+            Status: <span>${Status}</span>
+        </div>
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dashboard_widget_assignedTasks_list').nestable({
+                'maxDepth': 1
+            });
+
+            //Watch for list changes and show serialized output
+            function update_out(selector, sel2) {
+                const out = $(selector).nestable('serialize');
+                $(sel2).val(window.JSON.stringify(out));
+            }
+
+            update_out('#dashboard_widget_assignedTasks_list', "#dashboard_widget_assignedTasks_out");
+
+
+            $('#dashboard_widget_assignedTasks_list').on('change',
+                function() {
+                    update_out('#dashboard_widget_assignedTasks_list', "#dashboard_widget_assignedTasks_out");
+                });
+
+        });
+    </script>
+}

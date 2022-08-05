@@ -1,0 +1,167 @@
+﻿@page
+@model Invoices.IndexModel
+@using Microsoft.FeatureManagement
+@inject IFeatureManager featureManager
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Invoices";
+    ViewData["CurrentPageTitle"] = "Invoices";
+}
+
+@section PageHeader {
+    <div class="container-fluid">
+        <div class="d-flex flex-row justify-content-between align-items-center">
+            <div class="">
+                <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb page-head-nav">
+                        <li class="breadcrumb-item">
+                            <a asp-area="Travel" asp-page="/Index">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a asp-area="Travel" asp-page="/Invoices/Index">Invoices</a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div>
+                <a asp-area="Travel" asp-page="/Invoices/Create" class="btn btn-primary btn-lg" role="button"><i class="mdi mdi-plus"></i> New Invoice</a>
+            </div>
+        </div>
+    </div>
+}
+
+<feature name="@nameof(FeatureFlags.FeatureA)">
+    <div class="row">
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark1">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">New Invoices</div>
+                    <div class="value">
+                        <span class="indicator indicator-equal mdi mdi-chevron-right"></span><span class="number" data-toggle="counter" data-end="113">113</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark2">
+                    <canvas width="81" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 81px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Monthly Totals</div>
+                    <div class="value">
+                        <span class="indicator indicator-positive mdi mdi-chevron-up"></span><span class="number" data-toggle="counter" data-end="80" data-suffix="%">80%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark3">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Drafts</div>
+                    <div class="value">
+                        <span class="indicator indicator-positive mdi mdi-chevron-up"></span><span class="number" data-toggle="counter" data-end="532">532</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark4">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Submissions</div>
+                    <div class="value">
+                        <span class="indicator indicator-negative mdi mdi-chevron-down"></span><span class="number" data-toggle="counter" data-end="113">113</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</feature>
+
+<div class="container p-0">
+    <div class="panel panel-table">
+        <header class="panel-header">
+            All Invoices
+        </header>
+        <div class="panel-body">
+            @if (!Model.Invoices.Any())
+            {
+                <div class="text-center p-4">
+                    <p>No invoices to show</p>
+                    <a asp-area="Travel" asp-page="/Invoices/Create" class="btn btn-primary btn-lg" role="button"><i class="mdi mdi-plus"></i> New Invoice</a>
+
+                </div>
+            }
+            else
+            {
+                <ejs-grid id="invoice_allInvoices_grid" dataSource="Model.Invoices" allowPaging="true" allowFiltering="true" allowSorting="true" allowSelection="true" rowSelected="onRowSelected" >
+                    <e-grid-filtersettings type="Excel"></e-grid-filtersettings>
+                    <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+                    <e-grid-sortsettings columns="Model.TableInitialSortOrder"></e-grid-sortsettings>
+                    <e-grid-columns>
+                        <e-grid-column field="Client" headerText="Client"></e-grid-column>
+                        <e-grid-column field="GotoUrl" headerText="GoTo" visible="false"></e-grid-column>
+                        <e-grid-column field="EventName" headerText="Event"></e-grid-column>
+                        <e-grid-column field="ConsultantName" headerText="Consultant"></e-grid-column>
+                        <e-grid-column field="SubmittingUser" headerText="Agent" visible="false"></e-grid-column>
+                        <e-grid-column field="Status" headerText="Status" template="#invoice_allInvoices_grid_columnTemplate1" filter="@(new { type="CheckBox"})"></e-grid-column>
+                        <e-grid-column field="WhenSubmitted" headerText="Last Modified" customFormat="@(new {type = "datetime", format = "M/d/y" })" filter="@(new { type="Menu"})" template="#invoice_allInvoices_grid_whenSubmitted_col_template" ></e-grid-column>
+                        <e-grid-column field="Total" headerText="Total" textAlign="Right" format="C2" filter="@(new { type="Menu"})"></e-grid-column>
+                    </e-grid-columns>
+                </ejs-grid>
+
+            }
+        </div>
+    </div>
+</div>
+
+<ejs-toast id="toast_type">
+    <e-toast-position X="Right" Y="Bottom"></e-toast-position>
+</ejs-toast>
+
+@section ScriptSection{
+    <script id="invoice_allInvoices_grid_whenSubmitted_col_template" type="text/x-template">
+        <div>${LastModifiedDate}</div>
+        <small class="text-muted">${LastModifiedBy}</small>
+    </script>
+    <script>
+        // client
+        let onRowSelected = function (args) {
+            window.location.href = args.data.GotoUrl;
+        };
+
+        let showNotification = function (title, content, css, icon) {
+            var toasts = [{ title: title, content: content, cssClass: css, icon: icon }];
+            setTimeout(
+                () => {
+                    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                    toastObj.target = document.body;
+                    toastObj.show(toasts[0]);
+                },
+                100);
+        };
+    </script>
+    @if (Model.Notification != null && !string.IsNullOrEmpty(Model.Notification.Content))
+    {
+        <script>
+            showNotification('@Model.Notification.Title',
+                '@Model.Notification.Content',
+                '@Model.Notification.Css',
+                '@Model.Notification.Icon');
+        </script>
+    }
+
+    <script type="text/x-jsrender" id="invoice_allInvoices_grid_columnTemplate1">
+        <span class="badge ${StatusCssClass}">${Status}</span>
+    </script>
+
+}

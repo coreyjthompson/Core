@@ -1,0 +1,41 @@
+﻿@page
+@using Newtonsoft.Json
+@model MEI.Web.Pages.Clients.EditModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Clients";
+    ViewData["CurrentPageTitle"] = "Edit Client";
+}
+
+@section MainLayoutPageHeader {
+    <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="/Client/Index">Clients</a></li>
+            <li class="breadcrumb-item active"><a href="#">Edit</a></li>
+        </ol>
+    </nav>
+}
+<div class="container text-left ml-0">
+    @await Html.PartialAsync("_ClientFormPartial", Model.ClientForm)
+</div>
+@section MainBlazorScripts{
+}
+
+@section MainScriptSection{
+    <script>
+        let filteringStates = function(e) {
+            @*let predicate = new ej.data.Predicate('Text', 'contains', e.text, true);
+            let query = new ej.data.Query();
+            query = (e.text !== '' && e.value !== '') ? query.where(predicate) : query;
+            e.updateData(@Html.Raw(JsonConvert.SerializeObject(Model.TravelInvoice.Programs)), query);*@
+        };
+
+        let setStateName = function(e) {
+            //document.getElementById("TravelInvoice_SpeakerName").value = e.item.innerText;
+        };
+
+    </script>
+
+}
+

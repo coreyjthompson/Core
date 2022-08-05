@@ -1,0 +1,338 @@
+@using System.Runtime.InteropServices
+
+@using MEI.AbbVie.Infrastructure.Queries.Speaker
+
+@using MEI.Core.DomainModels
+@using MEI.Core.DomainModels.Common
+@using MEI.Core.DomainModels.Travel
+@using MEI.Core.Commands
+@using MEI.Core.Queries
+@using MEI.Core.Infrastructure.Clients.Queries
+
+@using MEI.Travel.Queries
+@using MEI.Travel.Commands;
+
+
+@using MEI.Web.Areas.Travel.Models
+@using MEI.Web.Areas.Travel.Validators
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.JSInterop
+
+@using Syncfusion.EJ2.Blazor.DropDowns
+@using Syncfusion.EJ2.Blazor.Inputs
+
+@inject IJSRuntime JSRuntime
+@inject IQueryProcessor AbbvieQueries
+@inject IQueryProcessor CoreQueries
+@inject ICommandProcessor CoreCommands
+
+@inject NavigationManager NavigationManager
+
+    <div id="carouselExampleControls" class="carousel slide">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="container p-0">
+                    <div class="invoice">
+                        <div class="row invoice-header">
+                            <div class="col-sm-7">
+                                <h3 class="text-danger">AdvanceU Travel</h3>
+                                <h4>1314 Burch Drive, Suite 200, Evansville, IN 47725</h4>
+                            </div>
+                            <div class="offset-md-1 col-sm-4 invoice-order">
+                                <div class="display-4">Invoice</div>
+                            </div>
+                        </div>
+                        <div class="invoice-data">
+                            <div class="row mb-2">
+                                <div class="col-4">
+                                    <label>Bill To</label>
+                                    <address class="invoice-address">
+                                        Meetings &amp; Events International<br />
+                                        Accounts Receivables<br />
+                                        1314 Burch Dr.<br />
+                                        Evansville, In 47725
+                                    </address>
+                                </div>
+                                <div class="col offset-md-3" id="invoice_data_column2">
+                                    <div class="form-row">
+                                        <label asp-for="InvoiceNumber" class="col-4 text-left">Invoice No.</label>
+                                        <div class="col text-right">@TravelInvoice.InvoiceNumber</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label asp-for="Description" class="col-4 text-left">For</label>
+                                        <div class="col text-right">@TravelInvoice.ClientName @TravelInvoice.Description</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label asp-for="SubmissionDate" class="col-4 text-left">Date</label>
+                                        <div class="col text-right">@TravelInvoice.SubmissionDate</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label asp-for="EventName" class="col-4 text-left">Event</label>
+                                        <div class="col text-right">@TravelInvoice.EventName</div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label asp-for="ConsultantName" class="col-4 text-left">Consultant</label>
+                                        <div class="col text-right">@TravelInvoice.ConsultantName</div>
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(TravelInvoice.SabreInvoiceId))
+                                    {
+                                        <div class="form-row">
+                                            <label asp-for="SabreInvoiceId" class="col-5 text-left">Sabre Invoice No.</label>
+                                            <div class="col text-right">@TravelInvoice.SabreInvoiceId</div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="invoice-lines">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th class="description font-weight-bold">Description</th>
+                                        <th class="amount font-weight-bold">Amount</th>
+                                        <th></th>
+                                    </tr>
+                                    @foreach (var item in TravelInvoice.LineItems)
+                                    {
+                                        <tr>
+                                            <td class="description">
+                                                <span>@item.TravelServiceName</span>
+                                            </td>
+                                            <td class="amount">
+                                                <div class="float-right">
+                                                    <span>@item.AmountAsString</span>
+                                                </div>
+                                            </td>
+                                            <td class="actions">
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                            <div class="invoice-total">
+                                Due @TravelInvoice.TotalAmount <br>
+                            </div>
+                            <div class="invoice-terms">
+                                Make all checks payable to AdvanceU Travel
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        @if (ShowPreviousButton)
+        {
+            <a class="carousel-control-prev" href="javascript:void(0);" role="button" @onclick="@(() => Previous())">
+                <div class="btn btn-rounded btn-primary btn-xl" style="width:50px; height:50px; border-radius:50%; padding:8px;">
+                    <i class="mdi mdi-chevron-left" aria-hidden="true" style="font-size: 1.923rem;"></i>
+                </div>
+            </a>
+        }
+
+        @if (ShowNextButton)
+        {
+            <a class="carousel-control-next" href="javascript:void(0);" role="button" @onclick="@(() => Next())">
+                <div class="btn btn-rounded btn-primary btn-xl" style="width:50px; height:50px; border-radius:50%; padding:8px;">
+                    <i class="mdi mdi-chevron-right" aria-hidden="true" style="font-size: 1.923rem;"></i>
+                </div>
+            </a>
+        }
+    </div>
+
+@code {
+    #region Code
+    public InvoiceFormViewModel TravelInvoice { get; set; } = new InvoiceFormViewModel();
+
+    [Parameter]
+    public int WorkItemId { get; set; }
+
+    private IList<InvoiceWorkflowStatus> WorkItems { get; set; } = new List<InvoiceWorkflowStatus>();
+
+    private IList<int> WorkflowStatusIds { get; set; } = new List<int>();
+
+    private bool ShowNextButton => _currentIndex < (WorkflowStatusIds.Count() - 1);
+
+    private bool ShowPreviousButton => _currentIndex > 0;
+
+    private string _clientName;
+
+    private int _currentIndex;
+
+    protected void TotalInvoiceLines()
+    {
+        TravelInvoice.TotalAmount = $"{TravelInvoice.LineItems.Sum(i => i.Amount):C}";
+    }
+
+    public async Task<IList<AgencyService>> GetTravelServices()
+    {
+        var query = new GetAllTravelServicesQuery();
+        var types = await CoreQueries.Execute(query);
+
+        return types.OrderBy(o => o.SortOrder).ToList();
+    }
+
+    private IList<InvoiceFormViewModel.LineItem> GetLineItems(IList<InvoiceLineItem> items = null)
+    {
+        if (items != null && items.Any())
+        {
+            return items.Select(i => new InvoiceFormViewModel.LineItem
+            {
+                Id = i.Id,
+                TravelServiceId = i.AgencyServiceId,
+                Quantity = i.Quantity,
+                Amount = i.Amount,
+                AmountAsString = i.Amount.ToString("C2")
+            }).ToList();
+
+        }
+
+        return new List<InvoiceFormViewModel.LineItem>
+        {
+            new InvoiceFormViewModel.LineItem
+            {
+                Id = 0, TravelServiceId = 0,
+                Quantity = 1,
+                Amount = 0,
+                AmountAsString = ""
+            }
+        };
+    }
+
+    protected async Task Next()
+    {
+        var list = WorkflowStatusIds.ToList();
+        _currentIndex = list.FindIndex(i => i == WorkItemId);
+
+        if(_currentIndex < (list.Count() - 1))
+        {
+            var newIndex = _currentIndex + 1;
+            WorkItemId = list[newIndex];
+            await SetTravelInvoiceFromWorkitemId(WorkItemId);
+            TotalInvoiceLines();
+            // Now that we have moved to the next version, we set currentIndex to the newIndex
+            _currentIndex = newIndex;
+            NavigationManager.NavigateTo($"./{WorkItemId}", false);
+        }
+
+    }
+
+    protected async Task Previous()
+    {
+        var list = WorkflowStatusIds.ToList();
+        _currentIndex = list.FindIndex(i => i == WorkItemId);
+
+        if (_currentIndex != 0)
+        {
+            var newIndex = _currentIndex - 1;
+            WorkItemId = list[newIndex];
+            await SetTravelInvoiceFromWorkitemId(WorkItemId);
+            TotalInvoiceLines();
+            // Now that we have moved to the previous version, we set currentIndex to the newIndex
+            _currentIndex = newIndex;
+            NavigationManager.NavigateTo($"./{WorkItemId}", false);
+        }
+
+    }
+
+
+    #region  Page Lifecycle Event Handlers
+
+    /// <summary>
+    /// Runs every time the page is rendered
+    /// </summary>
+    /// <param name="firstRender"></param>
+    /// <returns></returns>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await SetTravelInvoiceFromWorkitemId(WorkItemId);
+        TotalInvoiceLines();
+    }
+
+    #endregion
+
+    public async Task SetTravelInvoiceFromWorkitemId(int id)
+    {
+        var invoiceQuery = new GetInvoiceHistoryByStatusIdQuery
+        {
+            StatusId = id
+        };
+
+        var lines = await CoreQueries.Execute(invoiceQuery);
+        var first = lines.FirstOrDefault();
+        if (first != null)
+        {
+            TravelInvoice = new InvoiceFormViewModel
+            {
+                InvoiceId = first.InvoiceId,
+                ClientName = first.ClientName,
+                EventId = first.EventId,
+                EventName = first.EventName,
+                ConsultantId = first.ConsultantId,
+                ConsultantName = first.ConsultantName,
+                SabreInvoiceId = first.SabreInvoiceId,
+            };
+
+            TravelInvoice.LineItems = lines.Select(l => new InvoiceFormViewModel.LineItem
+            {
+                TravelServiceName = l.AgencyServiceName,
+                Amount = l.Amount ?? 0,
+                AmountAsString = l.Amount?.ToString("C2"),
+                Quantity = 1
+            }).ToList();
+
+
+            // Total up the lines
+            var total = TravelInvoice.LineItems.Sum(e => e.Amount);
+            TravelInvoice.TotalAmount = total.ToString("C2");
+
+            var historyQuery = new FindInvoiceWorkflowStatusesByInvoiceIdQuery
+            {
+                InvoiceId = TravelInvoice.InvoiceId ?? 0
+            };
+
+            WorkItems = await CoreQueries.Execute(historyQuery);
+            WorkflowStatusIds = WorkItems.Select(s => s.Id).ToList();
+            _currentIndex = WorkflowStatusIds.ToList().FindIndex(i => i == WorkItemId);
+        }
+    }
+
+
+    public class LineItem
+    {
+        public int InvoiceId { get; set; }
+
+        public int? ClientId { get; set; }
+
+        public string ClientName { get; set; }
+
+        public int? ConsultantId { get; set; }
+
+        public string ConsultantName { get; set; }
+
+        public int? EventId { get; set; }
+
+        public string EventName { get; set; }
+
+        public string SabreInvoiceId { get; set; }
+
+        public int AgencyServiceId { get; set; }
+
+        public string AgencyServiceName { get; set; }
+
+        public decimal Amount { get; set; }
+    }
+
+    #endregion
+}
+
+
+
+

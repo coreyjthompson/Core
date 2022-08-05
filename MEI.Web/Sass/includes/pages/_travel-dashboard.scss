@@ -1,0 +1,195 @@
+/*------------------------------------------------------------------
+  [Travel dashboard page]
+*/
+#container_chart_legend_g {
+    display: none;
+}
+
+#dashboard_widget_recentActivity {
+    .user-timeline-compact {
+        .user-timeline-date {
+            float: none;
+            text-transform: capitalize;
+            margin-bottom: 0;
+            line-height: 22px;
+        }
+    }
+}
+
+
+#dashboard_widget_assignedTasks_list {
+    position: relative;
+    display: block;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-size: 1rem;
+    line-height: normal;
+    overflow-y: auto;
+    height: 500px;
+}
+
+.dd-list {
+    display: block;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    .dd-item {
+        border-top: none;
+        border-right: none;
+        border-bottom: solid 1px rgba(128, 128, 128, 0.29);
+        border-left: none;
+        background: none repeat scroll 0 0 theme-color("light");
+        line-height: normal;
+
+        &:hover {
+            color: #404040;
+            background-color: #f0f0f0;
+        }
+
+        &:nth-child(even) {
+            background-color: #f5f5f5;
+
+            &:hover {
+                color: #404040;
+                background-color: #f0f0f0;
+            }
+        }
+
+        &:first-child {
+            border-top: solid 1px rgba(128, 128, 128, 0.29);
+        }
+
+        .dd-handle {
+            position: absolute;
+            margin: 0;
+            left: 0;
+            top: 0;
+            cursor: all-scroll;
+            width: 34px;
+            text-indent: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            border: none;
+            background: none;
+            height: 100%;
+            padding: 12px 0 0 5px;
+
+            > .e-icon-rowdragicon {
+
+                &::before {
+                    display: block;
+                    text-indent: 10px;
+                    font-size: 12px;
+                    font-weight: bold;
+                    color: #333;
+                    opacity: 0.54;
+                    content: '\e330';
+                    margin-top: 50%;
+                }
+            }
+        }
+
+        > button {
+            font-family: $icons-font;
+            display: block;
+            position: relative;
+            cursor: pointer;
+            float: left;
+            width: 25px;
+            height: 20px;
+            padding: 0;
+            text-indent: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            border: 0;
+            background: transparent;
+            font-size: 1.231rem;
+            line-height: 1;
+            text-align: center;
+            margin-left: 8px 2px 8px 35px;
+
+            &:before {
+                content: '\f278';
+                display: block;
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                text-indent: 0;
+            }
+
+            &[data-action="collapse"]:before {
+                content: '\f273';
+            }
+        }
+
+        .dd-content {
+            display: block;
+            margin: 0;
+            padding: 15px 17px 15px 50px;
+            text-decoration: none;
+            border: none;
+            height: 100%;
+        }
+    }
+
+    .dd-item, .dd-empty, .dd-placeholder {
+        display: block;
+        position: relative;
+        margin: 0;
+        padding: 0;
+        min-height: 75px;
+        font-size: 1rem;
+        /*line-height: 20px;*/
+    }
+
+    .dd-placeholder, .dd-empty {
+        margin: 0;
+        padding: 0;
+        min-height: 75px;
+        background-color: lighten(theme-color("info"), 25%);
+        border: 1px dashed darken(theme-color("info"), 10%);
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+    }
+
+    .dd-empty {
+        border: 1px dashed #bbb;
+        min-height: 100px;
+        background-color: #e5e5e5;
+        background-image: -webkit-linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%,theme-color("light")), -webkit-linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%, theme-color("light"));
+        background-image: -moz-linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%, theme-color("light")), -moz-linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%, theme-color("light"));
+        background-image: linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%, theme-color("light")), linear-gradient(45deg, theme-color("light") 25%, transparent 25%, transparent 75%, theme-color("light") 75%, theme-color("light"));
+        background-size: 60px 60px;
+        background-position: 0 0, 30px 30px;
+    }
+
+    .dd-collapsed {
+
+        .dd-list {
+            display: none;
+        }
+    }
+
+    &.dd-dragel {
+        position: absolute;
+        pointer-events: none;
+        z-index: 9999;
+
+        > .dd-item .dd-handle {
+            margin-top: 0;
+        }
+
+        > .dd-item {
+            -webkit-box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+            box-shadow: 2px 4px 6px 0 rgba(0,0,0,.1);
+        }
+    }
+
+    .dd-list {
+        padding-left: 30px;
+    }
+}
+

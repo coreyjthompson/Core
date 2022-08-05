@@ -1,0 +1,77 @@
+﻿@page
+@model MEI.Web.Areas.Admin.Pages.Users.IndexModel
+@{
+	ViewData["CurrentlySelectedLinkTitle"] = "Agents";
+	ViewData["CurrentPageTitle"] = "Agents";
+}
+
+@section PageHeader {
+	<div class="d-flex flex-row justify-content-between">
+		<div class="">
+			<h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+			<nav aria-label="breadcrumb" role="navigation">
+				<ol class="breadcrumb page-head-nav">
+					<li class="breadcrumb-item"><a asp-area="Travel" asp-page="/Index">Home</a></li>
+					<li class="breadcrumb-item"><a asp-area="Travel" asp-page="/Agent/Index">Users</a></li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+}
+<div class="container p-0">
+	<div class="card card-table" @*style="background-color: transparent;"*@>
+		<header class="card-header">
+			@Model.SelectedGroup Group Members
+			<div class="tools dropdown">
+				<span class="icon mdi mdi-download"></span><a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"><span class="icon mdi mdi-more-vert"></span></a>
+				<div class="dropdown-menu" role="menu">
+					<a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+					<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+				</div>
+			</div>
+		</header>
+		<div class="card-body">
+			<form method="post">
+				<div class="table-filters">
+					<div class="row form-row">
+						<div class="col text-left align-middle">
+							<select asp-items="Model.Groups" asp-for="SelectedGroup" class="form-control"></select>
+						</div>
+						<div class="col text-left align-middle">
+							<button type="submit" class="btn btn-primary" role="button">Submit</button>
+						</div>
+					</div>
+				</div>
+				
+			</form>
+			<ejs-grid id="invoice_allAgents_grid" dataSource="Model.Members" allowPaging="true" allowFiltering="true" allowSorting="true" allowSelection="false" enableHover="false" toolbar="@(new List<string>() {"Search" })"  >
+				<e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+				<e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+				<e-grid-columns>
+					<e-grid-column field="DisplayName" headerText="Agent" template="#empTemplate"></e-grid-column>
+					<e-grid-column field="Title" headerText="Title"></e-grid-column>
+					<e-grid-column field="Description" headerText="Description"></e-grid-column>
+					<e-grid-column field="EmailAddress" headerText="Email"></e-grid-column>
+					<e-grid-column field="Department" headerText="Department"></e-grid-column>
+					<e-grid-column field="PrincipleType" headerText="Type"></e-grid-column>
+				</e-grid-columns>
+			</ejs-grid>
+		</div>
+	</div>
+</div>
+
+<ejs-toast id="toast_type">
+	<e-toast-position X="Right" Y="Bottom"></e-toast-position>
+</ejs-toast>
+
+@section ScriptSection{
+
+	<script type="text/x-jsrender" id="empTemplate">
+		<div class="d-flex flex-row">
+			${Avatar}
+			<div class="d-flex text-left align-items-center justify-content-center">
+				${DisplayName}
+			</div>
+		</div>
+	</script>
+}

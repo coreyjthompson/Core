@@ -1,0 +1,169 @@
+@using System.ComponentModel.DataAnnotations.Schema
+@using System.Runtime.InteropServices
+
+@using MEI.AbbVie.Infrastructure.Queries.Speaker
+
+@using MEI.Core.DomainModels
+@using MEI.Core.DomainModels.Common
+@using MEI.Core.DomainModels.Travel
+@using MEI.Core.Commands
+@using MEI.Core.Queries
+@using MEI.Core.Infrastructure.Clients.Queries
+
+@using MEI.Travel.Queries
+@using MEI.Travel.Commands;
+
+
+@using MEI.Web.Areas.Travel.Models
+@using MEI.Web.Areas.Travel.Validators
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.JSInterop
+
+@using Syncfusion.EJ2.Blazor
+@using Syncfusion.EJ2.Blazor.Grids
+@using Syncfusion.EJ2.Blazor.Data
+
+@inject IJSRuntime JSRuntime
+@inject IQueryProcessor CoreQueries
+@inject ICommandProcessor CoreCommands
+@inject NavigationManager NavigationManager
+
+<div class="container p-0">
+    <EjsGrid TValue="AgencyServiceViewModel" Toolbar="@(new List<string>() { "Add" })" AllowPaging="true">
+        <GridEditSettings AllowAdding="true" AllowDeleting="true" AllowEditing="true" Mode="EditMode.Dialog"></GridEditSettings>
+        <EjsDataManager AdaptorInstance="@typeof(AgencyServiceDataAdaptor)" Adaptor="Adaptors.CustomAdaptor"></EjsDataManager>
+        <GridColumns>
+            <GridColumn Field=@nameof(AgencyServiceViewModel.Id) HeaderText="Service Id" IsPrimaryKey="true" ValidationRules="@(new { required=true, number=true})" Visible="false"></GridColumn>
+            <GridColumn Field=@nameof(AgencyServiceViewModel.Name) HeaderText="Name" ValidationRules="@(new { required=true})"></GridColumn>
+            <GridColumn Field=@nameof(AgencyServiceViewModel.FeeAmount) HeaderText="Fee" ValidationRules="@(new { required=true})" EditType="EditType.NumericEdit" Format="C2" TextAlign="TextAlign.Right"></GridColumn>
+            <GridColumn Field=@nameof(AgencyServiceViewModel.IsInactive) HeaderText="Inactive" EditType="EditType.BooleanEdit" DisplayAsCheckBox="true" Width="150" TextAlign="TextAlign.Center"></GridColumn>
+        </GridColumns>
+    </EjsGrid>
+</div>
+
+@code {
+    #region Code
+
+    public static IList<AgencyServiceViewModel> AgencyServices { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+    }
+
+    protected async Task EditAgencyService(AgencyServiceViewModel service)
+    {
+        await CoreCommands.Execute(
+            new EditAgencyServiceCommand
+            {
+                Id = service.Id,
+                Name = service.Name,
+                FeeAmount = service.FeeAmount,
+                IsInactive = service.IsInactive,
+                SortOrder = service.SortOrder
+            }
+        );
+    }
+
+    protected async Task CreateAgencyService(AgencyServiceViewModel service)
+    {
+        await CoreCommands.Execute(
+            new AddAgencyServiceCommand
+            {
+                Name = service.Name,
+                FeeAmount = service.FeeAmount,
+                IsInactive = service.IsInactive,
+                SortOrder = service.SortOrder
+            }
+        );
+    }
+
+    protected async Task<IList<AgencyService>> GetTravelServices()
+    {
+        var query = new GetAllTravelServicesQuery();
+        var types = await CoreQueries.Execute(query);
+
+        return types.OrderBy(o => o.SortOrder).ToList();
+    }
+
+    public class AgencyServiceViewModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public decimal FeeAmount { get; set; }
+
+        public int FeeCurrencyId { get; set; }
+
+        public virtual Currency FeeCurrency { get; set; }
+
+        public int SortOrder { get; set; }
+
+        public bool IsInactive { get; set; }
+    }
+
+    public class AgencyServiceDataAdaptor : DataAdaptor
+    {
+        public override async Task<Object> ReadAsync(DataManagerRequest dataManagerRequest, string key = null)
+        {
+            var parent = new MEI.Web.Components.TravelServiceForm();
+            var services = await parent.GetTravelServices();
+
+            IEnumerable<AgencyServiceViewModel> GridData = services.Select(s => new AgencyServiceViewModel { Id = s.Id, FeeAmount = s.FeeAmount, Name = s.Name, IsInactive = false }).ToList();
+
+            if (dataManagerRequest.Skip != 0)
+            {
+                GridData = GridData.Skip(dataManagerRequest.Skip); //Paging
+            }
+            if (dataManagerRequest.Take != 0)
+            {
+                GridData = GridData.Take(dataManagerRequest.Take);
+            }
+            return dataManagerRequest.RequiresCounts ? new DataResult() { Result = GridData, Count = AgencyServices.Count() } : (object)GridData;
+        }
+
+        public override async Task<Object> InsertAsync(DataManager dataManager, object value, string key)
+        {
+            var parent = new MEI.Web.Components.TravelServiceForm();
+            var service = value as AgencyServiceViewModel;
+            if (service != null)
+            {
+                await parent.CreateAgencyService(service);
+            }
+
+            // Now add it to our list
+            AgencyServices.Insert(0, service);
+            return value;
+        }
+
+        public override async Task<object> UpdateAsync(DataManager dataManager, object value, string keyField, string key)
+        {
+            var parent = new MEI.Web.Components.TravelServiceForm();
+            var service = value as AgencyServiceViewModel;
+            if (service != null)
+            {
+                var data = AgencyServices.Where((AgencyServiceViewModel) => AgencyServiceViewModel.Id == service.Id).FirstOrDefault();
+                if (data != null)
+                {
+                    // Update the record in the database
+                    await parent.EditAgencyService(service);
+
+                    // Now update the record in the list
+                    data.Name = service.Name;
+                    data.FeeAmount = service.FeeAmount;
+                    data.IsInactive = service.IsInactive;
+                }
+            }
+
+            return value;
+        }
+    }
+    #endregion
+}
+
+
+
+

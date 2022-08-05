@@ -1,0 +1,55 @@
+﻿@page
+@model MEI.Web.Areas.Admin.Pages.Users.DirectoryEntryListModel
+@{
+	ViewData["CurrentlySelectedLinkTitle"] = "Members";
+	ViewData["CurrentPageTitle"] = "Members";
+}
+
+@section PageHeader {
+	<div class="d-flex flex-row justify-content-between">
+		<div class="">
+			<h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+			<nav aria-label="breadcrumb" role="navigation">
+				<ol class="breadcrumb page-head-nav">
+					<li class="breadcrumb-item"><a asp-area="Travel" asp-page="/Index">Home</a></li>
+					<li class="breadcrumb-item"><a asp-area="Travel" asp-page="/Agent/Index">Users</a></li>
+				</ol>
+			</nav>
+		</div>
+	</div>
+}
+<div class="container p-0">
+	<div class="card">
+		<header class="card-header">
+			All Directory Entries
+			<div class="tools dropdown">
+				<span class="icon mdi mdi-download"></span><a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"><span class="icon mdi mdi-more-vert"></span></a>
+				<div class="dropdown-menu" role="menu">
+					<a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+					<div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+				</div>
+			</div>
+		</header>
+		<div class="card-body">
+			@foreach(var entry in Model.Entries)
+			{
+				<div class="row">
+					<div class="col-3">
+						@entry.Item1
+					</div>
+					<div class="col">
+						@entry.Item2
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+</div>
+
+<ejs-toast id="toast_type">
+	<e-toast-position X="Right" Y="Bottom"></e-toast-position>
+</ejs-toast>
+
+@section ScriptSection{
+
+}

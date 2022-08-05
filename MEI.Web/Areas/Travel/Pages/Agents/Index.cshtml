@@ -1,0 +1,150 @@
+﻿@page
+@model Agents.IndexModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Agents";
+    ViewData["CurrentPageTitle"] = "Agents";
+}
+
+@section PageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Travel" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a asp-area="Travel" asp-page="/Agent/Index">Agents</a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+}
+
+<div class="container p-0">
+    <div class="row">
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark1">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">New Users</div>
+                    <div class="value">
+                        <span class="indicator indicator-equal mdi mdi-chevron-right"></span><span class="number" data-toggle="counter" data-end="113">113</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark2">
+                    <canvas width="81" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 81px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Monthly Sales</div>
+                    <div class="value">
+                        <span class="indicator indicator-positive mdi mdi-chevron-up"></span><span class="number" data-toggle="counter" data-end="80" data-suffix="%">80%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark3">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Impressions</div>
+                    <div class="value">
+                        <span class="indicator indicator-positive mdi mdi-chevron-up"></span><span class="number" data-toggle="counter" data-end="532">532</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-lg-6 col-xl-3">
+            <div class="widget widget-tile">
+                <div class="chart sparkline" id="spark4">
+                    <canvas width="85" height="35" style="display: inline-block; height: 35px; vertical-align: top; width: 85px;"></canvas>
+                </div>
+                <div class="data-info">
+                    <div class="desc">Downloads</div>
+                    <div class="value">
+                        <span class="indicator indicator-negative mdi mdi-chevron-down"></span><span class="number" data-toggle="counter" data-end="113">113</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card card-table" @*style="background-color: transparent;"*@>
+        <header class="card-header">
+            All Travel Agents
+            <div class="tools dropdown">
+                <span class="icon mdi mdi-download"></span>
+                <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                    <span class="icon mdi mdi-more-vert"></span>
+                </a>
+                <div class="dropdown-menu" role="menu">
+                    <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                    <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+                </div>
+            </div>
+        </header>
+        <div class="card-body">
+            <ejs-grid id="invoice_allAgents_grid" dataSource="Model.Agents" allowPaging="true" allowFiltering="true" allowSorting="true" allowSelection="false" enableHover="false">
+                <e-grid-filtersettings type="Excel"></e-grid-filtersettings>
+                <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+                <e-grid-columns>
+                    <e-grid-column field="DisplayName" headerText="Agent" template="#empTemplate"></e-grid-column>
+                    <e-grid-column field="EmailAddress" headerText="Email"></e-grid-column>
+                </e-grid-columns>
+            </ejs-grid>
+        </div>
+    </div>
+</div>
+
+<ejs-toast id="toast_type">
+    <e-toast-position X="Right" Y="Bottom"></e-toast-position>
+</ejs-toast>
+
+@section ScriptSection{
+
+    <script type="text/x-jsrender" id="empTemplate">
+        <div class="d-flex flex-row">
+            <div class="user-avatar p-1">
+                <img src="${AvatarSource}" alt="Avatar">
+            </div>
+            <div class="d-flex text-left align-items-center justify-content-center">
+                ${DisplayName}
+            </div>
+        </div>
+    </script>
+    <script>
+        let showNotification = function(title, content, css, icon) {
+            var toasts = [{ title: title, content: content, cssClass: css, icon: icon }];
+            setTimeout(
+                () => {
+                    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                    toastObj.target = document.body;
+                    toastObj.show(toasts[0]);
+                },
+                100);
+        }
+    </script>
+    @if (Model.Notification != null && !string.IsNullOrEmpty(Model.Notification.Content))
+    {
+        <script>
+            showNotification('@Model.Notification.Title',
+                '@Model.Notification.Content',
+                '@Model.Notification.Css',
+                '@Model.Notification.Icon');
+        </script>
+    }
+
+    <script type="text/x-jsrender" id="invoice_allInvoices_grid_columnTemplate1">
+        <span class="badge ${StatusCssClass}">${Status}</span>
+    </script>
+
+}

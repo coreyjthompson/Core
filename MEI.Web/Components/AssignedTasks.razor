@@ -1,0 +1,107 @@
+@page "/Blazor/test"
+
+@using Microsoft.AspNetCore.Http.Extensions
+@using Syncfusion.EJ2.Blazor.Grids
+
+
+
+<div class="col-lg-12 control-section">
+    <div class="content-wrapper">
+        <div class="row">
+
+            <EjsGrid id="Grid" DataSource="@AssignedTaskData" AllowPaging="true">
+                <GridTemplates>
+                    @*<RowTemplate>
+                        @{
+                            <td class="photo">
+                            </td>
+                            <td class="details">
+                                <table class="CardTable" cellpadding="3" cellspacing="2">
+                                    <colgroup>
+                                        <col width="50%">
+                                        <col width="50%">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <td class="CardHeader">Speaker </td>
+                                            <td>Speaker Name </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="CardHeader">Location</td>
+                                            <td>Location Name </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="CardHeader">
+                                                Program ID
+                                            </td>
+                                            <td>
+                                                Program id guid
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        }
+                    </RowTemplate>*@
+                </GridTemplates>
+                @*<GridColumns>
+            <GridColumn Field=@nameof(AssignedTask.ConsultantName) HeaderText="Order ID" Width="120"></GridColumn>
+            <GridColumn Field=@nameof(AssignedTask.ProgramGuid) HeaderText="Customer Name" Width="150"></GridColumn>
+        </GridColumns>*@
+
+                <GridColumns>
+                    <GridColumn HeaderText="Employee Image" width="150" TextAlign="@TextAlign.Center"> </GridColumn>
+                    <GridColumn HeaderText="Employee Details" width="300" TextAlign="@TextAlign.Left"></GridColumn>
+                </GridColumns>
+
+
+            </EjsGrid>
+
+        </div>
+    </div>
+</div>
+
+@code{
+
+    public List<AssignedTask> AssignedTaskData { get; set; }
+
+    protected override void OnInitialized()
+    {
+        // Get assigned tasks 
+        AssignedTaskData = AssignedTask.Get().ToList();
+
+
+    }
+
+    protected override void OnAfterRender(bool firstRender)  
+    {  
+      
+    } 
+
+    public class AssignedTask
+    {
+        public int Id { get; set; }
+
+        public string ConsultantName { get; set; }
+
+        public string LocationName { get; set; }
+
+        public string ProgramGuid { get; set; }
+
+        public string Status { get; set; }
+
+        public static IList<AssignedTask> Get()
+        {
+            return new List<AssignedTask>
+            {
+                new AssignedTask {Id = 1, ConsultantName = "Julie Watherly", LocationName = "Ruth's Chris Steak House", ProgramGuid = "DEF04-DM01-19"},
+                new AssignedTask {Id = 2, ConsultantName = "Michael Schmidt", LocationName = "Flemming’s Prime Steakhouse", ProgramGuid = "DEE02-DM02-19"},
+                new AssignedTask {Id = 3, ConsultantName = "Matt Overton", LocationName = "Office of Dr. Overton", ProgramGuid = "ILL03-GO02-19"},
+                new AssignedTask {Id = 4, ConsultantName = "Debra Baggins", LocationName = "Biaggi’s Italiano", ProgramGuid = "ILK34-GD01-19"},
+                new AssignedTask {Id = 5, ConsultantName = "Micheal Rathers", LocationName = "Brew Brother’s Taphouse", ProgramGuid = "DEF05-DM01-19"},
+            };
+
+        }
+    }
+
+}

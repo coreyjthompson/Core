@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>Jason Nichols</Authors>
+    <Company>Meetings &amp; Events International</Company>
+    <Product>MEI Security</Product>
+    <PackageTags>security keyvault</PackageTags>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.0.0</Version>
+    <Description>Access secrets from an Azure Key Vault</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MEI.Security.Cryptography" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Azure.KeyVault" Version="3.0.3" />
+    <PackageReference Include="Microsoft.IdentityModel.Clients.ActiveDirectory" Version="4.5.1" />
+  </ItemGroup>
+
+</Project>

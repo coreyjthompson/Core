@@ -1,0 +1,62 @@
+//Full colored panel
+@mixin card-full-color($bgcolor, $color:$white){
+  background-color: $bgcolor;
+  color: $color;
+
+  .card-header-contrast{
+      background-color: lighten($bgcolor, 3%);
+      padding: 20px 20px 15px;
+      margin: 0;
+  }
+
+  .tools{
+    .icon{
+      color: $color;
+      &:hover{
+        color: darken($bgcolor, 6%);
+      }
+    }
+  }
+}
+
+//Full colored initials header panel
+@mixin card-initials-color($bgcolor, $color: $white) {
+
+    .tools {
+        .icon {
+            color: $color;
+
+            &:hover {
+                color: darken($bgcolor, 6%);
+            }
+        }
+    }
+
+    .initials {
+        background-color: $bgcolor;
+        color: $color;
+        font-size: 60px;
+        font-weight: 600;
+        text-align: center;
+        margin: auto;
+        border-radius: 50%;
+        width: 125px;
+        height: 125px;
+        line-height: 125px;
+
+
+        .icon {
+            color: $color;
+
+            &:hover {
+                color: darken($bgcolor, 6%);
+            }
+        }
+    }
+
+    .card-img-top {
+        /*padding-top: 10px;*/
+        width: 100%;
+        display: block;
+    }
+}

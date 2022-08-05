@@ -1,0 +1,46 @@
+﻿@model MEI.Web.Models.Shared.StatusAlertBannerViewModel
+@{
+    var counter = 1;
+}
+<!-- status alert banner with history drawer-->
+    <div class="status-banner">
+        <div class="alert @Model.BannerCssClass mb-0">
+            <div class="container">
+                <div class="message">
+                    <span class="alert-heading">@Model.BannerHeading</span> @Model.BannerMessage
+                </div>
+            </div>
+        </div>
+        <div id="travel_invoice_status_history_drawer" class="activity-drawer is-closed is-peeking">
+            <div class="activity-drawer-content">
+                <div class="scroll-overflow">
+                    <div class="activity-log scroll-overflow-content">
+                        @foreach (var item in Model.HistoryItems)
+                        {
+                            <div class="log-item">
+                                <div class="container">
+                                    @Html.Raw(@item.OwnerAvatar)
+                                    <div class="text-left flex-fill align-self-center">@item.ActionTaken</div>
+                                    @if (counter != 1)
+                                    {
+                                        <div class="text-right flex-fill align-self-center">
+                                            <a asp-area="Travel" asp-page="/Invoices/History" asp-route-id="@item.StatusId" target="_blank">Details</a>
+                                        </div>
+                                     }
+                                </div>
+                                    
+                            </div>
+                            ++counter;
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="activity-drawer-footer">
+
+            </div>
+
+            <div class="activity-drawer-toggle drawer-toggle-handle">
+                View History
+            </div>
+        </div>
+    </div>

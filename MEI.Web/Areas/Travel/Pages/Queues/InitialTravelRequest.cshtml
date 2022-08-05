@@ -1,0 +1,23 @@
+﻿@page "/Travel/InitialTravelRequestQueue"
+@model Queues.InitialTravelRequestModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Initial Travel Request";
+}
+
+@section PageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">Initial Travel Request Queue</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item">
+                        <a asp-area="Travel" asp-page="/Index">Home</a>
+                    </li>
+                    <li class="breadcrumb-item active">
+                        <a href="#">Initial Travel Request</a>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+}

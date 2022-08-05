@@ -1,0 +1,15 @@
+﻿@using MEI.Core.DomainModels.Common
+@model MEI.Web.Models.AdminLog.ListViewModel;
+@{
+    ViewData["Title"] = "Travel Invoices";
+}
+<h1>@ViewData["Title"]</h1>
+
+<ul>
+    @foreach (Log item in Model.Logs)
+    {
+        <li>
+            @(item.Id + " - " + item.Message);
+        </li>
+    }
+</ul>

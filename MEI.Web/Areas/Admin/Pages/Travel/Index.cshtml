@@ -1,0 +1,33 @@
+﻿@page
+@model MEI.Web.Areas.Admin.Pages.Travel.IndexModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Services";
+    ViewData["CurrentPageTitle"] = "Travel Services";
+}
+
+@section PageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a asp-area="" asp-page="#">Admin</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/Travel/Index">Travel</a></li>
+                    <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/Travel/Index">Services</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+}
+<div class="container p-0">
+    <component type="typeof(TravelServiceForm)" render-mode="Server" />
+    @*<component type="typeof(SyncfusionTest)" render-mode="Server" param-Services="@Model.AgencyServices" />*@
+</div>
+
+@section BlazorScripts{
+    <script src="~/_framework/blazor.server.js"></script>
+}
+
+@section ScriptSection{
+
+}

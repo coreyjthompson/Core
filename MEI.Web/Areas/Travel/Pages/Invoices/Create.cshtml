@@ -1,0 +1,43 @@
+﻿@page
+
+@model MEI.Web.Areas.Travel.Pages.Invoices.CreateModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Invoices";
+    ViewData["CurrentPageTitle"] = "New Invoice";
+
+}
+
+@section PageHeader {
+    <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Index">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Invoices/Index">Invoices</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="#">New</a>
+            </li>
+        </ol>
+    </nav>
+}
+
+@*<form method="post">*@
+    <component type="typeof(InvoiceFormFields)" render-mode="Server" param-TravelInvoice="@Model.TravelInvoice"/>
+@*</form>*@
+
+@section BlazorScripts{
+    <script src="~/_framework/blazor.server.js"></script>
+}
+
+@section ScriptSection{
+    <script src="~/js/meiAbbViePortal/common.js" type="text/javascript"></script>
+    <script src="~/js/meiAbbViePortal/ui.js" type="text/javascript"></script>
+    <script src="~/js/meiAbbViePortal/travel.js" type="text/javascript"></script>
+
+    <script>
+        meiAbbViePortal.travel.invoice.form.prototype.init();
+    </script>
+}

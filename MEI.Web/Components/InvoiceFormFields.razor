@@ -1,0 +1,832 @@
+@using System.Runtime.InteropServices
+
+@using MEI.AbbVie.Infrastructure.Queries.Speaker
+
+@using MEI.Core.DomainModels
+@using MEI.Core.DomainModels.Common
+@using MEI.Core.DomainModels.Travel
+@using MEI.Core.Commands
+@using MEI.Core.Queries
+@using MEI.Core.Infrastructure.Clients.Queries
+
+@using MEI.Travel.Queries
+@using MEI.Travel.Commands;
+
+
+@using MEI.Web.Areas.Travel.Models
+@using MEI.Web.Areas.Travel.Validators
+
+@using Microsoft.AspNetCore.Components.Forms
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.AspNetCore.Mvc.Rendering
+@using Microsoft.JSInterop
+
+@using Syncfusion.EJ2.Blazor.DropDowns
+@using Syncfusion.EJ2.Blazor.Inputs
+
+@inject IJSRuntime JSRuntime
+@inject IQueryProcessor AbbvieQueries
+@inject IQueryProcessor CoreQueries
+@inject ICommandProcessor CoreCommands
+
+@inject NavigationManager NavigationManager
+
+
+<EditForm Model="@TravelInvoice" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+    <FluentValidator TValidator="InvoiceFormValidator" />
+    <div class="container p-0" id="container_invoice_form">
+        <div class="invoice">
+            <div class="row invoice-header">
+                <div class="col-sm-7">
+                    <h3 class="text-danger">AdvanceU Travel</h3>
+                    <h4>1314 Burch Drive, Suite 200, Evansville, IN 47725</h4>
+                </div>
+                <div class="col-sm-5 invoice-order">
+                    <div class="display-4">Invoice</div>
+                    @if (EnableInvoiceNumber)
+                    {
+                        <div class="invoice-id">
+                            <span>No.</span> @TravelInvoice.InvoiceNumber
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="invoice-data">
+                <input type="hidden" name="TravelInvoice.InvoiceId" value="@TravelInvoice.InvoiceId" />
+                <div class="row mb-2 form-row">
+                    <div class="col-4">
+                        <label>Bill To</label>
+                        <address class="invoice-address">
+                            Meetings &amp; Events International<br />
+                            Accounts Receivables<br />
+                            1314 Burch Dr.<br />
+                            Evansville, In 47725
+                        </address>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="TravelInvoice_Description" class="">For</label><br />
+                            <span>@TravelInvoice.Description</span>
+                            <input type="hidden" id="TravelInvoice_Description" name="TravelInvoice.Description" @bind="@TravelInvoice.Description" class="form-control" />
+                            <ValidationMessage For="@(() => TravelInvoice.Description)" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="TravelInvoice_SabreInvoiceId" class="">Sabre Invoice ID</label>
+                            <input type="text" id="TravelInvoice_SabreInvoiceId" name="TravelInvoice.SabreInvoiceId" @bind="@TravelInvoice.SabreInvoiceId" class="form-control" />
+                            <ValidationMessage For="@(() => TravelInvoice.SabreInvoiceId)" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row form-row">
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label class="" for="TravelInvoice_ClientName">MEI Client</label>
+                            <select id="TravelInvoice_ClientName" name="TravelInvoice.ClientName" class="form-control ej-dropdownlist" @onchange="@OnClientChange">
+                                <option value=""> </option>
+                                @foreach (var type in TravelInvoice.Clients)
+                                {
+                                    if (type.Text == TravelInvoice.ClientName)
+                                    {
+                                        <option value="@type.Text" selected>@type.Text</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@type.Text">@type.Text</option>
+                                    }
+
+
+                                }
+                            </select>
+                            <ValidationMessage For="@(() => TravelInvoice.ClientName)" />
+                        </div>
+                        <div class="form-group d-none">
+                            <label class="" for="TravelInvoice_ClientName_2">Billing Client</label><br />
+                            <span>@TravelInvoice.ClientName</span>
+                            <input type="hidden" name="TravelInvoice.ClientName" id="TravelInvoice_ClientName_2" value="@TravelInvoice.ClientName" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="TravelInvoice_EventId" class="">Event/Program</label>
+                            <EjsAutoComplete TValue="string" DataSource="@TravelInvoice.Events" PopupHeight="230px" Value="@TravelInvoice.EventName" HtmlAttributes="@EventFieldHtmlAttributes" ID="TravelInvoice_EventName" Enabled="@EnableEventList">
+                                <AutoCompleteEvents TValue="string" ValueChange="OnEventNameValueChanged"></AutoCompleteEvents>
+                                <AutoCompleteFieldSettings Value="Text"></AutoCompleteFieldSettings>
+                            </EjsAutoComplete>
+                            <ValidationMessage For="@(() => TravelInvoice.EventId)" />
+                            <input type="hidden" value="@TravelInvoice.EventId" id="TravelInvoice_EventId" name="TravelInvoice.EventId" />
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="form-group">
+                            <label for="TravelInvoice_ConsultantId" class="">Consultant/Speaker</label>
+                            @if (EnableConsultantList)
+                            {
+                                <select id="TravelInvoice_ConsultantId" name="TravelInvoice.ConsultantId" class="form-control ej-dropdownlist" @bind="@TravelInvoice.ConsultantId">
+                                    <option value=""> </option>
+                                    @foreach (var type in TravelInvoice.Consultants)
+                                    {
+                                        if (type.Value == TravelInvoice.ConsultantId.ToString())
+                                        {
+                                            <option value="@type.Value" selected>@type.Text</option>
+                                        }
+                                        else
+                                        {
+                                            <option value="@type.Value">@type.Text</option>
+                                        }
+
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                <select id="TravelInvoice_ConsultantId" name="TravelInvoice.ConsultantId" class="form-control ej-dropdownlist disabled e-disable" aria-disabled="true" disabled>
+                                </select>
+                            }
+                            <ValidationMessage For="@(() => TravelInvoice.ConsultantId)" />
+                            <input type="hidden" value="@TravelInvoice.ConsultantName" id="TravelInvoice_SpeakerName" name="TravelInvoice.ConsultantName" />
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="invoice-lines">
+                <ValidationMessage For="@(() => TravelInvoice.LineItems)" />
+                <div class="mei-toolbar">
+                    <div class="toolbar-item" aria-disabled="false" title="Add Line Item">
+                        <button type="button" class="btn toolbar-btn" id="travel_invoice_lineItems_grid_add" tabindex="-1" @onclick="@AddNewLineItem">
+                            <i class="toolbar-icon icon-left icon-add"></i>
+                            <span class="toolbar-btn-text">Add Line Item</span>
+                        </button>
+                    </div>
+                </div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <th class="description">Description</th>
+                            <th class="amount">Amount</th>
+                            <th></th>
+                        </tr>
+                        @for (var i = 0; i < TravelInvoice.LineItems.Count(); i++)
+                        {
+                            var index = i;
+                            <tr>
+                                <td class="description">
+                                    <input type="hidden" value="@TravelInvoice.LineItems[index].Id" id="TravelInvoice_LineItems@(index)_Id" name="TravelInvoice.LineItems[@(index)].Id" />
+                                    <select id="TravelInvoice_LineItems@(index)_TravelServiceId" name="TravelInvoice.LineItems[@index].TravelServiceId" class="form-control" @onchange="@((args) => OnServiceChange(args, @index))">
+                                        <option value=""> </option>
+                                        @foreach (var type in TravelInvoice.TravelServices)
+                                        {
+                                            if (type.Value == TravelInvoice.LineItems[index].TravelServiceId.ToString())
+                                            {
+                                                <option value="@type.Value" selected>@type.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@type.Value">@type.Text</option>
+                                            }
+                                        }
+                                    </select>
+                                    <ValidationMessage For="@(() => TravelInvoice.LineItems[@index].TravelServiceId)" />
+                                    <div class="blz-popover-container">
+                                        <div class="popover popover-validation fade bs-popover-bottom @TravelInvoice.LineItems[index].ServiceCssClass" role="tooltip" x-placement="bottom">
+                                            <div class="arrow"></div>
+                                            <h3 class="popover-header"></h3>
+                                            <div class="popover-body">
+                                                @TravelInvoice.LineItems[index].LineItemError.TravelServiceValidationMessage
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="amount">
+                                    <div class="float-right">
+                                        <span class="e-control-wrapper e-numeric e-input-group e-valid-input">
+                                            <input type="text" class="form-control ej-numeric e-control e-numerictextbox e-lib e-input" id="TravelInvoice_LineItems@(i)_AmountAsString" name="TravelInvoice.LineItems[@(index)].AmountAsString" role="spinbutton" tabindex="0" autocomplete="off" aria-valuenow="@TravelInvoice.LineItems[index].AmountAsString" value="@TravelInvoice.LineItems[index].AmountAsString" @onfocus="@(() => OnAmountFocus(@index))" @onfocusout="@(() => OnAmountFocusOut(@index))" @onchange="@((args) => OnAmountChange(args, @index))" />
+                                            <span class="e-input-group-icon e-spin-down" title="Decrement value" aria-label="Decrement value" @onclick="@(() => DecrementAmount(@index))"></span>
+                                            <span class="e-input-group-icon e-spin-up" title="Increment value" aria-label="Increment value" @onclick="@(() => IncrementAmount(@index))"></span>
+                                        </span>
+                                        <ValidationMessage For="@(() => TravelInvoice.LineItems[@index].Amount)" />
+                                        <div class="blz-popover-container">
+                                            <div class="popover popover-validation fade bs-popover-bottom @TravelInvoice.LineItems[index].AmountCssClass" role="tooltip" x-placement="bottom">
+                                                <div class="arrow"></div>
+                                                <h3 class="popover-header"></h3>
+                                                <div class="popover-body">
+                                                    @TravelInvoice.LineItems[i].LineItemError.AmountValidationMessage
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input type="hidden" value="@TravelInvoice.LineItems[index].Amount" id="TravelInvoice_LineItems@(index)_Amount" name="TravelInvoice.LineItems[@(index)].Amount" />
+                                    </div>
+                                </td>
+                                <td class="actions">
+                                    <button class="btn table-action-btn" type="button" tabindex="-1" @onclick="@(() => DeleteLine(@index))">
+                                        <i class="table-icon icon-delete"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="invoice-total">
+                    Due @Total <br>
+                </div>
+            </div>
+            <div class="invoice-footer">
+                <button type="submit" class="btn btn-secondary btn-lg" name="TravelInvoice.FormAction" value="save"  @onclick="@((action) => SetFormAction("save"))">Save as Draft</button>
+                <button type="submit" class="btn btn-primary btn-lg" name="TravelInvoice.FormAction" value="submit" @onclick="@((action) => SetFormAction("submit"))">Save and Submit</button>
+                <button type="submit" class="btn btn-secondary btn-lg cancel" name="TravelInvoice.FormAction" value="cancel" @onclick="@((action) => SetFormAction("cancel"))">Cancel</button>
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    #region Code
+    [Parameter]
+    public InvoiceFormViewModel TravelInvoice { get; set; } = new InvoiceFormViewModel();
+
+    private Dictionary<string, object> SabreIdFieldHtmlAttributes => GetSabreIdFieldHtmlAttributes();
+
+    private Dictionary<string, object> DescriptionFieldHtmlAttributes => GetDescriptionFieldHtmlAttributes();
+
+    private Dictionary<string, object> ConsultantFieldHtmlAttributes => GetConsultantFieldHtmlAttributes();
+
+    private Dictionary<string, object> EventFieldHtmlAttributes => GetEventFieldHtmlAttributes();
+
+    private IList<AgencyService> TravelServices { get; set; }
+
+    private bool EnableEventList { get; set; }
+
+    private bool EnableConsultantList { get; set; }
+
+    private bool EnableInvoiceNumber => ShouldInvoiceNumberBeEnabled();
+
+    private bool WasSubmittedSuccessfully { get; set; }
+
+    private string PageAction { get; set; }
+
+    private const decimal stepValue = 0.01m;
+
+    private const decimal defaultAmount = 0;
+
+    private int? _selectedRowIndex;
+
+    private int? _selectedInvoiceId;
+    private string _clientName;
+
+    private string Total { get; set; }
+
+    private EditContext EditContext;
+
+    protected bool IsSelectedExpenseType(int savedTypeId, string currentExpenseTypeId)
+    {
+        if (currentExpenseTypeId == savedTypeId.ToString())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    protected void TotalInvoiceLines()
+    {
+        Total = $"{TravelInvoice.LineItems.Sum(i => i.Amount):C}";
+    }
+
+    public async Task UpdateConsultants(string programName)
+    {
+        TravelInvoice.ConsultantName = null;
+        TravelInvoice.ConsultantId = null;
+
+        if (!string.IsNullOrEmpty(programName))
+        {
+            // Get the speakers
+            var consultantQuery = new GetAllSpeakersForProgramQuery
+            {
+                ProgramName = programName
+            };
+
+            var data = await AbbvieQueries.Execute(consultantQuery);
+            var consultants = data.Select(p => new SelectListItem { Value = p.ConsultantId.ToString(), Text = p.Consultant.GetFullName() }).ToList();
+
+            // TODO: for some reason it never updates the syncfusion ddl and user has to select the consultant manually - find out why and uncomment below
+            // Set the dropdownlist's values
+            TravelInvoice.Consultants = consultants;
+
+            if (consultants.Any())
+            {
+                EnableConsultantList = true;
+
+                if (consultants.Count() == 1)
+                {
+                    TravelInvoice.ConsultantName = consultants[0].Text;
+                    TravelInvoice.ConsultantId = Convert.ToInt32(consultants[0].Value);
+                }
+
+            }
+
+        }
+    }
+
+    public async Task<IList<AgencyService>> GetTravelServices()
+    {
+        var query = new GetAllTravelServicesQuery();
+        var types = await CoreQueries.Execute(query);
+
+        return types.OrderBy(o => o.SortOrder).ToList();
+    }
+
+    private IList<SelectListItem> ConvertTravelServicesSelectList(IList<AgencyService> list)
+    {
+        return list.Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name }).ToList();
+    }
+
+
+    public async Task<IList<SelectListItem>> GetClients()
+    {
+        var query = new GetAllClientsQuery();
+        var types = await CoreQueries.Execute(query);
+
+        return types.Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name }).ToList();
+    }
+
+    private IList<InvoiceFormViewModel.LineItem> GetLineItems(IList<InvoiceLineItem> items = null)
+    {
+        if (items != null && items.Any())
+        {
+            return items.Select(i => new InvoiceFormViewModel.LineItem
+            {
+                Id = i.Id,
+                TravelServiceId = i.AgencyServiceId,
+                Quantity = i.Quantity,
+                Amount = i.Amount,
+                AmountAsString = i.Amount.ToString("C2")
+            }).ToList();
+
+        }
+
+        return new List<InvoiceFormViewModel.LineItem>
+{
+            new InvoiceFormViewModel.LineItem
+            {
+                Id = 0, TravelServiceId = 0,
+                Quantity = 1,
+                Amount = defaultAmount,
+                AmountAsString = defaultAmount.ToString("C2")
+            }
+        };
+    }
+
+    private async Task FillInvoiceSelections()
+    {
+        var services = await GetTravelServices();
+        TravelInvoice.Clients = await GetClients();
+        TravelServices = services;
+        TravelInvoice.TravelServices = ConvertTravelServicesSelectList(services);
+    }
+
+    private async Task SetConsultantsForProgram(string programName)
+    {
+        if (!string.IsNullOrEmpty(programName))
+        {
+            // Get the speakers
+            var consultantQuery = new GetAllSpeakersForProgramQuery
+            {
+                ProgramName = programName
+            };
+
+            var data = await AbbvieQueries.Execute(consultantQuery);
+            var consultants = data.Select(p => new SelectListItem { Value = p.ConsultantId.ToString(), Text = p.Consultant.GetFullName() }).ToList();
+
+            TravelInvoice.Consultants = consultants;
+        }
+        else
+        {
+            TravelInvoice.Consultants = new List<SelectListItem>();
+        }
+    }
+
+    private async Task SetEventsForClient(string client)
+    {
+        if (!string.IsNullOrEmpty(client))
+        {
+            // Get the events
+            var eventQuery = new MEI.AbbVie.Infrastructure.Queries.Program.GetAllProgramsQuery();
+            var events = await AbbvieQueries.Execute(eventQuery);
+            TravelInvoice.Events = events.Select(p => new SelectListItem { Value = p.Id.ToString(), Text = p.Name }).ToList();
+        }
+        else
+        {
+            TravelInvoice.Events = new List<SelectListItem>();
+        }
+    }
+
+    private bool ShouldInvoiceNumberBeEnabled()
+    {
+        return !(string.IsNullOrEmpty(TravelInvoice.InvoiceNumber) || TravelInvoice.InvoiceNumber == "0".PadLeft(7, '0'));
+    }
+
+    #region Event Handlers
+    protected void DeleteLine(int index)
+    {
+        TravelInvoice.LineItems.RemoveAt(index);
+        TotalInvoiceLines();
+    }
+
+    protected void DecrementAmount(int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+        item.Amount -= stepValue;
+        if (item.Amount < 0)
+        {
+            item.Amount = 0;
+        }
+
+        item.AmountAsString = $"{item.Amount:C}";
+        TotalInvoiceLines();
+    }
+
+    protected void IncrementAmount(int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+        item.Amount = item.Amount + stepValue;
+        item.AmountAsString = $"{item.Amount:C}";
+        TotalInvoiceLines();
+    }
+
+    protected void OnAmountChange(Microsoft.AspNetCore.Components.ChangeEventArgs element, int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+
+        if (decimal.TryParse(element.Value.ToString(), out var number))
+        {
+            item.Amount = number;
+        }
+
+        TotalInvoiceLines();
+    }
+
+    /// <summary>
+    /// Runs when an event is chosen int he autocomplete
+    /// </summary>
+    /// <param name="args"></param>
+    /// <returns></returns>
+    public async Task OnEventNameValueChanged(@Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        TravelInvoice.ConsultantId = null;
+        TravelInvoice.ConsultantName = null;
+        TravelInvoice.Consultants = new List<SelectListItem>();
+
+        var id = TravelInvoice.Events.FirstOrDefault(e => e.Text == args.Value)?.Value;
+        if (id != null)
+        {
+            TravelInvoice.EventId = Convert.ToInt32(id);
+            TravelInvoice.EventName = args.Value;
+            await UpdateConsultants(args.Value);
+            StateHasChanged();
+        }
+    }
+
+    /// <summary>
+    /// Runs when the client is selected in the dropdown 
+    /// </summary>
+    /// <param name="element"></param>
+    /// <returns></returns>
+    protected async Task OnClientChange(Microsoft.AspNetCore.Components.ChangeEventArgs element)
+    {
+        var client = element.Value.ToString();
+
+        // Reset the form fields
+        TravelInvoice.ConsultantId = null;
+        TravelInvoice.ConsultantName = null;
+        TravelInvoice.Consultants = new List<SelectListItem>();
+        TravelInvoice.EventId = null;
+        TravelInvoice.EventName = null;
+        TravelInvoice.ClientName = client;
+
+        if (!string.IsNullOrEmpty(client))
+        {
+            SetClientExpenseCategory();
+
+            EnableEventList = true;
+            // Get the lsit of events per client rules
+            await SetEventsForClient(client);
+        }
+        StateHasChanged();
+    }
+
+    /// <summary>
+    /// Runs when the consultant is selected in the dropdownlist
+    /// </summary>
+    /// <param name="args"></param>
+    protected void OnConsultantValueChanged(@Syncfusion.EJ2.Blazor.DropDowns.ChangeEventArgs<string> args)
+    {
+        TravelInvoice.ConsultantName = TravelInvoice.Consultants.FirstOrDefault(e => e.Text == args.Value)?.Value;
+    }
+
+    /// <summary>
+    /// Runs when focus is given to the Amount textbox
+    /// </summary>
+    /// <param name="index"></param>
+    protected void OnAmountFocus(int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+        item.AmountAsString = $"{item.Amount:F2}";
+
+        _selectedRowIndex = index;
+    }
+
+    /// <summary>
+    /// Runs when focus leaves the Amount textbox
+    /// </summary>
+    /// <param name="index"></param>
+    protected void OnAmountFocusOut(int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+        item.AmountAsString = $"{item.Amount:C2}";
+    }
+
+    /// <summary>
+    /// Runs when an agency service is selected from the dropdownlist
+    /// </summary>
+    /// <param name="element"></param>
+    /// <param name="index"></param>
+    protected void OnServiceChange(Microsoft.AspNetCore.Components.ChangeEventArgs element, int index)
+    {
+        var item = TravelInvoice.LineItems[index];
+        if (int.TryParse(element.Value.ToString(), out var serviceId))
+        {
+            item.TravelServiceId = serviceId;
+            var service = TravelServices.FirstOrDefault(s => s.Id == serviceId);
+            if (service != null)
+            {
+                item.Amount = service.FeeAmount;
+                item.AmountAsString = $"{item.Amount:C2}";
+                TotalInvoiceLines();
+            }
+        }
+    }
+
+    /// <summary>
+    /// Adds a new line item to the list when the add button is clicked
+    /// </summary>
+    private void AddNewLineItem()
+    {
+        var count = TravelInvoice.LineItems.Count();
+        TravelInvoice.LineItems.Insert(count, new InvoiceFormViewModel.LineItem { TravelServiceId = 0, Amount = defaultAmount, AmountAsString = $"{defaultAmount:C}", Quantity = 1 });
+        TotalInvoiceLines();
+    }
+
+
+    private void SetFormAction(string action)
+    {
+        if (!string.IsNullOrEmpty(action))
+        {
+            TravelInvoice.FormAction = action;
+        }
+
+    }
+
+    private void SetClientExpenseCategory()
+    {
+        if (string.IsNullOrEmpty(TravelInvoice.ClientName))
+        {
+            TravelInvoice.Description = "Travel Booking Fees";
+            return;
+        }
+
+        switch (TravelInvoice.ClientName.ToLower())
+        {
+            case "abbvie":
+                TravelInvoice.Description = "Travel Booking";
+                return;
+            default:
+                TravelInvoice.Description = "Travel Booking Fees";
+                return;
+
+        }
+
+    }
+
+    #endregion
+
+    #region  Page Lifecycle Event Handlers
+
+    /// <summary>
+    /// Runs every time the page is rendered
+    /// </summary>
+    /// <param name="firstRender"></param>
+    /// <returns></returns>
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (_selectedRowIndex != null)
+        {
+            await JSRuntime.InvokeAsync<object>("selectAmountValue", _selectedRowIndex);
+            _selectedRowIndex = null;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        EditContext = new EditContext(TravelInvoice);
+        // Set the page's action so we know which command to run when submitted
+        PageAction = TravelInvoice.PageAction;
+
+        // Enable the event list depending on if the client has been selected
+        EnableEventList = !string.IsNullOrEmpty(TravelInvoice.ClientName);
+        if (EnableEventList)
+        {
+            // Get the event list of that client
+            await SetEventsForClient(TravelInvoice.ClientName);
+        }
+
+        // Enable the consultant list depending on if the event has been selected
+        EnableConsultantList = !string.IsNullOrEmpty(TravelInvoice.EventName);
+        if (EnableConsultantList)
+        {
+            // Get the speaker list of that event
+            await SetConsultantsForProgram(TravelInvoice.EventName);
+        }
+
+        if (!TravelInvoice.LineItems.Any())
+        {
+            TravelInvoice.LineItems = GetLineItems();
+        }
+
+        SetClientExpenseCategory();
+        await FillInvoiceSelections();
+
+        TotalInvoiceLines();
+
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        if (!string.IsNullOrEmpty(PageAction))
+        {
+            switch (PageAction.ToLower())
+            {
+                case "edit":
+                    // Run the edit command
+                    await EditInvoice();
+                    // Redirect to the list page
+                    NavigationManager.NavigateTo("../", true);
+                    break;
+                case "add":
+                    // Run the add command
+                    await CreateInvoice();
+                    // Redirect to the list page
+                    NavigationManager.NavigateTo("./", true);
+                    break;
+                default:
+                    // Throw an error
+                    break;
+
+            }
+
+        }
+
+
+
+    }
+
+    private void HandleInvalidSubmit()
+    {
+    }
+
+    private async Task CreateInvoice()
+    {
+        var workflowSteps = new List<WorkflowStepEnum>();
+
+        if (TravelInvoice.FormAction == "cancel")
+        {
+            NavigationManager.NavigateTo("./", true);
+        }
+
+        if (TravelInvoice.FormAction == "save")
+        {
+            workflowSteps.Add(WorkflowStepEnum.InvoiceCreated);
+        }
+
+        if (TravelInvoice.FormAction == "submit")
+        {
+            workflowSteps.Add(WorkflowStepEnum.InvoiceCreated);
+            workflowSteps.Add(WorkflowStepEnum.InvoiceSubmittedForPayment);
+        }
+
+        // Move viewmodels into models and save
+        var lineItems = TravelInvoice.LineItems.Select(l => new InvoiceLineItem { Id = l.Id, AgencyServiceId = l.TravelServiceId, Quantity = l.Quantity, Amount = decimal.Parse(l.AmountAsString, System.Globalization.NumberStyles.Any) }).ToList();
+
+        await CoreCommands.Execute(
+            new AddInvoiceCommand
+            {
+                ClientName = TravelInvoice.ClientName,
+                EventId = TravelInvoice.EventId,
+                ConsultantId = TravelInvoice.ConsultantId,
+                SabreInvoiceId = TravelInvoice.SabreInvoiceId,
+                SubmittingUser = TravelInvoice.SubmittingUser,
+                EventName = TravelInvoice.EventName,
+                ConsultantName = TravelInvoice.ConsultantName,
+                LineItems = lineItems,
+                WorkflowStatuses = workflowSteps
+            }
+        );
+
+
+    }
+
+    private async Task EditInvoice()
+    {
+        var workflowSteps = new List<WorkflowStepEnum>();
+
+        if (TravelInvoice.FormAction == "cancel")
+        {
+            NavigationManager.NavigateTo("./", true);
+        }
+
+        if (TravelInvoice.FormAction == "save")
+        {
+            workflowSteps.Add(WorkflowStepEnum.InvoiceDraftSaved);
+        }
+
+        if (TravelInvoice.FormAction == "submit")
+        {
+            workflowSteps.Add(WorkflowStepEnum.InvoiceSubmittedForPayment);
+        }
+
+        if (TravelInvoice.FormAction != "cancel")
+        {
+            // Move viewmodels into models and save
+            var lineItems = TravelInvoice.LineItems.Select(
+                l => new InvoiceLineItem
+                {
+                    Id = l.Id,
+                    AgencyServiceId = l.TravelServiceId,
+                    Quantity = l.Quantity,
+                    Amount = decimal.Parse(l.AmountAsString, System.Globalization.NumberStyles.Any),
+                    InvoiceId = TravelInvoice.InvoiceId ?? 0
+                }
+            ).ToList();
+
+            var id = await CoreCommands.Execute(
+                new EditInvoiceCommand
+                {
+                    InvoiceId = TravelInvoice.InvoiceId ?? 0,
+                    ClientName = TravelInvoice.ClientName,
+                    EventId = TravelInvoice.EventId,
+                    ConsultantId = TravelInvoice.ConsultantId,
+                    SabreInvoiceId = TravelInvoice.SabreInvoiceId,
+                    SubmittingUser = TravelInvoice.SubmittingUser,
+                    EventName = TravelInvoice.EventName,
+                    ConsultantName = TravelInvoice.ConsultantName,
+                    LineItems = lineItems,
+                    WorkflowStatuses = workflowSteps
+                }
+            );
+
+        }
+
+        //var notification = TravelInvoice.GetNotification();
+
+    }
+
+    #endregion
+
+    #region Form Field Parameters
+    private Dictionary<string, object> GetEventFieldHtmlAttributes()
+    {
+        var list = new Dictionary<string, object>();
+        list.Add("name", "TravelInvoice.EventName");
+        return list;
+    }
+
+    private Dictionary<string, object> GetConsultantFieldHtmlAttributes()
+    {
+        var list = new Dictionary<string, object>();
+        list.Add("name", "TravelInvoice.ConsultantId");
+        return list;
+    }
+
+    private Dictionary<string, object> GetSabreIdFieldHtmlAttributes()
+    {
+        var list = new Dictionary<string, object>();
+        list.Add("name", "TravelInvoice.SabreId");
+        return list;
+    }
+
+    private Dictionary<string, object> GetDescriptionFieldHtmlAttributes()
+    {
+        var list = new Dictionary<string, object>();
+        list.Add("name", "TravelInvoice.Description");
+        list.Add("rows", "2");
+        return list;
+    }
+
+    #endregion
+    #endregion
+}
+
+
+
+

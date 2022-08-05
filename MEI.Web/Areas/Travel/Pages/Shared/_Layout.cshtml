@@ -1,0 +1,19 @@
+﻿@{
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+@RenderBody()
+
+@section MainLayoutPageHeader {
+    @RenderSection("PageHeader", false)
+}
+
+
+@section MainScriptSection {
+    @RenderSection("ScriptSection", false)
+}
+
+@section MainBlazorScripts {
+    @RenderSection("BlazorScripts", false)
+
+}

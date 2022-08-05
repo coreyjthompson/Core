@@ -1,0 +1,37 @@
+﻿@page "{id}"
+
+@model Invoices.ViewModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Invoices";
+    ViewData["CurrentPageTitle"] = "View Invoice";
+}
+
+@section PageHeader {
+    <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Index">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Invoices/Index">Invoices</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="#">@Model.TravelInvoice.InvoiceNumber</a>
+            </li>
+        </ol>
+    </nav>
+}
+
+<vc:status-alert-banner workflow-steps="@Model.TravelInvoice.WorkflowSteps"></vc:status-alert-banner>
+<div class="container p-0" id="container_invoice_view">
+    @await Html.PartialAsync("_ViewInvoicePartial", Model.TravelInvoice)
+</div>
+
+@section ScriptSection{
+    <script src="~/js/meiAbbViePortal/ui.js" type="text/javascript"></script>
+    <script src="~/js/meiAbbViePortal/travel.js" type="text/javascript"></script>
+    <script>
+        meiAbbViePortal.ui.statusBanner.prototype.init();
+    </script>
+}

@@ -1,0 +1,29 @@
+﻿@page
+@model Vendors.IndexModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Vendors";
+}
+
+@section MainLayoutPageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">Vendors</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a asp-page="~/Home/Index" >Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="~/Event/Index">Vendors</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+}
+<div class="container">
+
+</div>
+
+
+@section MainScriptSection{
+    <script>
+
+    </script>
+}

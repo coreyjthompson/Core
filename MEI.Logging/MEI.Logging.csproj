@@ -1,0 +1,42 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>2.2.0</Version>
+    <Authors>Jason Nichols</Authors>
+    <Company>Meetings &amp; Events International</Company>
+    <Description>Centralized logging for MEI Enterprise applications to use.</Description>
+    <Copyright>Copyright ©2019 Meetings &amp; Events International</Copyright>
+    <PackageReleaseNotes>2.2.0 - added ability to set correlation id by way of NLog variable
+2.1.0 - added CorrelationId to file, database, and mail targets
+2.0.1 - added NLog.xsd to output
+2.0.0 - switched from NLog.Web to NLog.Web.AspNetCore. Updated NLog packages to 4.6.6
+
+1.1.0 - add AppName to database log
+1.0.3 - another try at the fix for NLog.config
+1.0.2 - another fix to try to get NLog.Config to get NLog.config added as content and copied to ouput
+1.0.1 - fix NLog.config not getting added as content
+1.0.0 - This is the first release that is usuable by Production code. Ensure that the added NLog.config gets copied to the output folder.
+0.0.1 - NLog is currently implemented as the default with targets for the Console, File, and Database. An Nlog.config will be added the the referencing application in which logging levels, and target specific settings can be adjusted if needed.</PackageReleaseNotes>
+    <PackageTags>log logging nlog</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.2.0" />
+    <PackageReference Include="NLog" Version="4.6.6" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.5.2" />
+    <PackageReference Include="NLog.Schema" Version="4.6.6" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.8.4" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.6.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

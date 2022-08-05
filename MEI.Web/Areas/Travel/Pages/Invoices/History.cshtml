@@ -1,0 +1,15 @@
+﻿@page "{id}"
+@model MEI.Web.Areas.Travel.Pages.Invoices.HistoryModel
+@{
+    Layout = "_Layout_NoLeftNav";
+}
+
+<div class="" id="container_invoice_view">
+    @* render the blazor component *@
+    <component type="typeof(InvoiceVersions)" render-mode="Server" param-WorkItemId="@Model.WorkItemId" />
+</div>
+
+@section MainBlazorScripts{
+    <script src="~/_framework/blazor.server.js"></script>
+}
+

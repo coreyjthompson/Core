@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="..\..\..\..\.nuget\packages\mei.logging\2.2.0\contentFiles\any\any\NLog.config" Link="NLog.config">
+      <Private>True</Private>
+      <NuGetPackageVersion>2.2.0</NuGetPackageVersion>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <NuGetItemType>Content</NuGetItemType>
+      <TargetPath>NLog.config</TargetPath>
+      <NuGetPackageId>MEI.Logging</NuGetPackageId>
+    </Content>
+    <Content Include="..\..\..\..\.nuget\packages\mei.logging\2.2.0\contentFiles\any\any\NLog.xsd" Link="NLog.xsd">
+      <Private>True</Private>
+      <NuGetPackageVersion>2.2.0</NuGetPackageVersion>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <NuGetItemType>Content</NuGetItemType>
+      <TargetPath>NLog.xsd</TargetPath>
+      <NuGetPackageId>MEI.Logging</NuGetPackageId>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoFixture" Version="4.11.0" />
+    <PackageReference Include="Bogus" Version="28.0.2" />
+    <PackageReference Include="MEI.Logging" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="2.2.6" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.4.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    <PackageReference Include="NodaTime.Bogus" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MEI.Core\MEI.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Infrastructure\Admin\" />
+    <Folder Include="Infrastructure\Commands\Decorators\" />
+    <Folder Include="Infrastructure\Helpers\" />
+    <Folder Include="Infrastructure\Mocks\" />
+    <Folder Include="Infrastructure\Queries\Decorators\" />
+  </ItemGroup>
+
+</Project>

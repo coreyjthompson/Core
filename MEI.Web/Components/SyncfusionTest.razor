@@ -1,0 +1,96 @@
+@using Syncfusion.EJ2.Blazor
+@using Syncfusion.EJ2.Blazor.Data
+@using Syncfusion.EJ2.Blazor.Grids
+
+<EjsGrid TValue="AgencyServiceViewModel" ID="Grid" AllowSorting="true" AllowPaging="true" Toolbar="@(new List<string>() { "Add", "Delete", "Update", "Cancel" })">
+    <EjsDataManager AdaptorInstance="@typeof(CustomAdaptor)" Adaptor="Adaptors.CustomAdaptor"></EjsDataManager>
+    <GridPageSettings PageSize="8"></GridPageSettings>
+    <GridEditSettings AllowEditing="true" AllowDeleting="true" AllowAdding="true" Mode="@EditMode.Dialog"></GridEditSettings>
+    <GridColumns>
+        <GridColumn Field=@nameof(AgencyServiceViewModel.Id) HeaderText="Service ID" IsPrimaryKey="true" TextAlign="@TextAlign.Center" Visible="false"></GridColumn>
+        <GridColumn Field=@nameof(AgencyServiceViewModel.Name) HeaderText="Description" Width="150"></GridColumn>
+        <GridColumn Field=@nameof(AgencyServiceViewModel.FeeAmount) HeaderText="Fee" Width="150"></GridColumn>
+    </GridColumns>
+</EjsGrid>
+
+
+@code{
+    [Parameter]
+    public IList<string> Services { get; set; }
+
+    public static List<AgencyServiceViewModel> Orders { get; set; }
+
+    protected override void OnInitialized()
+    {
+        //Orders = Enumerable.Range(1, 75).Select(x => new Order()
+        //{
+        //    OrderID = 1000 + x,
+        //    CustomerID = (new string[] { "ALFKI", "ANANTR", "ANTON", "BLONP", "BOLID" })[new Random().Next(5)],
+        //    Freight = 2.1 * x,
+        //}).ToList();
+    }
+
+    public class AgencyServiceViewModel
+    {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public decimal FeeAmount { get; set; }
+
+        public int SortOrder { get; set; }
+
+        public bool IsInactive { get; set; }
+    }
+
+    // Implementing custom adaptor by extending the DataAdaptor class
+    public class CustomAdaptor : DataAdaptor
+    {
+        // Performs data Read operation
+        public override object Read(DataManagerRequest dm, string key = null)
+        {
+            IEnumerable<AgencyServiceViewModel> DataSource = Orders;
+            if (dm.Search != null && dm.Search.Count > 0)
+            {
+                // Searching
+                DataSource = DataOperations.PerformSearching(DataSource, dm.Search);
+            }
+            if (dm.Sorted != null && dm.Sorted.Count > 0)
+            {
+                // Sorting
+                DataSource = DataOperations.PerformSorting(DataSource, dm.Sorted);
+            }
+            if (dm.Where != null && dm.Where.Count > 0)
+            {
+                // Filtering
+                DataSource = DataOperations.PerformFiltering(DataSource, dm.Where, dm.Where[0].Operator);
+            }
+            int count = DataSource.Cast<AgencyServiceViewModel>().Count();
+            if (dm.Skip != 0)
+            {
+                //Paging
+                DataSource = DataOperations.PerformSkip(DataSource, dm.Skip);
+            }
+            if (dm.Take != 0)
+            {
+                DataSource = DataOperations.PerformTake(DataSource, dm.Take);
+            }
+            return dm.RequiresCounts ? new DataResult() { Result = DataSource, Count = count } : (object)DataSource;
+        }
+
+        // Performs Insert operation
+        public override object Insert(DataManager dm, object value, string key)
+        {
+            Orders.Insert(0, value as AgencyServiceViewModel);
+            return value;
+        }
+
+        // Performs Remove operation
+        public override object Remove(DataManager dm, object value, string keyField, string key)
+        {
+            Orders.Remove(Orders.Where(or => or.Id == int.Parse(value.ToString())).FirstOrDefault());
+            return value;
+        }
+
+    }
+}

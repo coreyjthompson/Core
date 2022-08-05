@@ -1,0 +1,6 @@
+﻿@page "{id}"
+@(await Html.RenderComponentAsync<Counter>(RenderMode.ServerPrerendered))
+
+@section MainBlazorScripts{
+    <script src="~/_framework/blazor.server.js"></script>
+}

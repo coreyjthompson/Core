@@ -1,0 +1,43 @@
+/*------------------------------------------------------------------
+  [Panels]
+*/
+//Panel heading
+.panel-header {
+    font-size: $panel-heading-font-size;
+    font-weight: $panel-heading-font-weight;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: $panel-heading-top-padding;
+    margin: 0;
+    border-bottom-width: 0;
+    border-radius: $panel-border-radius $panel-border-radius 0 0;
+    background-color: transparent;
+
+    .tools {
+        float: right;
+        font-size: 0;
+
+        > a {
+            display: inline-block;
+        }
+
+        .icon {
+            display: inline-block;
+            font-size: $panel-heading-icon-size;
+            line-height: $panel-heading-icon-line-height;
+            vertical-align: middle;
+            cursor: pointer;
+            color: $panel-heading-icon-color;
+            min-width: $panel-heading-icon-size;
+            text-align: center;
+
+            & + .icon {
+                margin-left: $panel-heading-icon-separation;
+            }
+
+            &:hover {
+                color: $panel-heading-icon-hover;
+            }
+        }
+    }
+}

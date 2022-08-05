@@ -1,0 +1,87 @@
+﻿@model MEI.Web.Areas.Travel.Models.InvoiceFormViewModel
+<div class="invoice">
+    <div class="row invoice-header">
+        <div class="col-sm-7">
+            <h3 class="text-danger">AdvanceU Travel</h3>
+            <h4>1314 Burch Drive, Suite 200, Evansville, IN 47725</h4>
+        </div>
+        <div class="offset-md-1 col-sm-4 invoice-order">
+            <div class="display-4">Invoice</div>
+        </div>
+    </div>
+    <div class="invoice-data">
+        <div class="row mb-2">
+            <div class="col-4">
+                <label>Bill To</label>
+                <address class="invoice-address">
+                    Meetings &amp; Events International<br />
+                    Accounts Receivables<br />
+                    1314 Burch Dr.<br />
+                    Evansville, In 47725
+                </address>
+            </div>
+            <div class="col offset-md-3" id="invoice_data_column2">
+                <div class="form-row">
+                    <label asp-for="InvoiceNumber" class="col-4 text-left">Invoice No.</label>
+                    <div class="col text-right">@Model.InvoiceNumber</div>
+                </div>
+                <div class="form-row">
+                    <label asp-for="Description" class="col-4 text-left">For</label>
+                    <div class="col text-right">@Model.ClientName @Model.Description</div>
+                </div>
+                <div class="form-row">
+                    <label asp-for="SubmissionDate" class="col-4 text-left">Date</label>
+                    <div class="col text-right">@Model.SubmissionDate</div>
+                </div>
+                <div class="form-row">
+                    <label asp-for="EventName" class="col-4 text-left">Event</label>
+                    <div class="col text-right">@Model.EventName</div>
+                </div>
+                <div class="form-row">
+                    <label asp-for="ConsultantName" class="col-4 text-left">Consultant</label>
+                    <div class="col text-right">@Model.ConsultantName</div>
+                </div>
+                @if (!string.IsNullOrEmpty(Model.SabreInvoiceId))
+                {
+                    <div class="form-row">
+                        <label asp-for="SabreInvoiceId" class="col-5 text-left">Sabre Invoice No.</label>
+                        <div class="col text-right">@Model.SabreInvoiceId</div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="invoice-lines">
+        <table>
+            <tbody>
+                <tr>
+                    <th class="description font-weight-bold">Description</th>
+                    <th class="amount font-weight-bold">Amount</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.LineItems)
+                {
+                    <tr>
+                        <td class="description">
+                            <span>@item.TravelServiceName</span>
+                        </td>
+                        <td class="amount">
+                            <div class="float-right">
+                                <span>@item.AmountAsString</span>
+                            </div>
+                        </td>
+                        <td class="actions">
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div class="invoice-total">
+            Due @Model.TotalAmount <br>
+        </div>
+        <div class="invoice-terms">
+            Make all checks payable to AdvanceU Travel
+        </div>
+    </div>
+
+</div>

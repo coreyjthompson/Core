@@ -1,0 +1,63 @@
+/*------------------------------------------------------------------
+  [Pagination]
+*/
+
+.e-pager {
+    .e-currentitem, .e-currentitem:hover {
+        border-radius: 50%;
+        color: $white;
+        background-color: theme-color("primary");
+    }
+
+    .e-numericitem:not(.e-active):not(.e-np):not(.e-pp):hover {
+        background-color: #f4f4f4;
+        opacity: 1;
+        border-radius: 50%;
+    }
+}
+
+.panel-table {
+    .e-pager {
+        background-color: transparent;
+        border-top-color: rgb(205, 212, 217);
+
+        .e-prevpagedisabled,
+        .e-prevpage,
+        .e-nextpage,
+        .e-nextpagedisabled,
+        .e-lastpagedisabled,
+        .e-lastpage,
+        .e-firstpage,
+        .e-firstpagedisabled {
+            color: #000;
+        }
+
+        .e-prevpagedisabled,
+        .e-prevpage,
+        .e-nextpage,
+        .e-nextpagedisabled,
+        .e-lastpagedisabled,
+        .e-lastpage,
+        .e-firstpage,
+        .e-firstpagedisabled,
+        .e-pagercontainer {
+            background-color: transparent;
+        }
+
+        .e-numericitem {
+            background-color: transparent;
+        }
+
+        .e-currentitem, .e-currentitem:hover {
+            border-radius: 50%;
+            color: $white;
+            background-color: theme-color("primary");
+        }
+
+        .e-numericitem:not(.e-active):not(.e-np):not(.e-pp):hover {
+            background-color: lighten(theme-color("primary"), 40%);
+            opacity: 1;
+            border-radius: 50%;
+        }
+    }
+}

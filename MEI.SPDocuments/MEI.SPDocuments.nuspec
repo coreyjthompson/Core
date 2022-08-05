@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>MEI.SPDocuments</id>
+    <version>0.0.0</version>
+    <title>MEI SharePoint Document Storage</title>
+    <authors>Jason Nichols</authors>
+    <owners>Meetings &amp; Events International</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>API to interact with the document storage system using SharePoint. Add, update, delete, and search for documents.</description>
+    <releaseNotes>test version increment. no change.</releaseNotes>
+    <copyright>Copyright © 2019</copyright>
+    <dependencies>	  
+	  <dependency id="iTextSharp" version="5.5.3" />
+      <dependency id="MEI.Logging" version="2.2.0" />
+      <dependency id="PDFsharp" version="1.32.2602.0" />
+      <dependency id="NodaTime" version="2.4.6" />
+      <dependency id="Microsoft.Extensions.Configuration" version="2.2.0" />
+      <dependency id="Microsoft.Extensions.Configuration.Json" version="2.2.0" />
+      <dependency id="Microsoft.Extensions.Options" version="2.2.0" />
+      <dependency id="Microsoft.Extensions.Options.ConfigurationExtensions" version="2.2.0" />
+      <dependency id="Microsoft.Extensions.DependencyInjection.Abstractions" version="2.2.0" />
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Core" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Data" targetFramework="" />
+      <frameworkAssembly assemblyName="System.DirectoryServices" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Drawing" targetFramework="" />
+	  <frameworkAssembly assemblyName="System.Runtime.Caching" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Web.Services" targetFramework="" />
+      <frameworkAssembly assemblyName="System.Xml" targetFramework="" />
+    </frameworkAssemblies>
+	<contentFiles>
+      <files include="any/any/spDocumentsSettings.json" buildAction="content" copyToOutput="true" />
+    </contentFiles>
+  </metadata>
+  <files>
+	<file src="MEI.SP_Documents.dll" target="lib" />
+	<file src="MEI.SP_Documents.xml" target="lib" />
+	<file src="spDocumentsSettings.json" target="contentFiles/any/any" />
+	<file src="spDocumentsSettings.json" target="content" />
+	<file src="Install.ps1" target="tools" />
+  </files>    
+</package>

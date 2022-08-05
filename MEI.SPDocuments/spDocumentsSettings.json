@@ -1,0 +1,686 @@
+{
+  "LdapPaths": [
+    "LDAP://10.200.100.42/OU=Domain Admins,DC=meintl,DC=com",
+    "LDAP://10.200.100.42/OU=Domain Users,DC=meintl,DC=com",
+    "LDAP://10.200.100.42/OU=Owners,DC=meintl,DC=com"
+  ],
+  "CredentialUserName": "meidocs",
+  "CredentialPassword": "codynuttis911",
+  "CredentialDomain": "MEIDOMAIN1",
+  "ConnectionStrings": {
+    "Event": "server=sqldev2;database=Event;User ID=MEIDocs;Password=codynuttis911;"
+  },
+  "BaseDocumentPath": "\\\\w2k3server6\\databases\\Database\\Documents\\",
+  "BaseWebPath": "\\\\evv-fs4\\SharePointDocs\\Documents\\",
+  "SigninUploadTimeoutAlert": "AbbVie_Close_Out@meintl.com",
+  "SmtpServer": "intsmtp.meintl.com",
+  "BaseSiteUrl": "https://meintl0.sharepoint.com/sites/",
+  "DocumentLibraryTitles": {
+    "ADCV": "ADCV",
+    "ADFMVT": "ADFMVT",
+    "ADFMVTE": "ADFMVTE",
+    "ADPSRF": "ADPSRF",
+    "ADSD": "ADS Document",
+    "ADSSD": "ADS SlideDeck",
+    "AHSK": "Adhoc Slidekit",
+    "APE": "Attendee Program Evaluation",
+    "ASIS": "Attendee SignIn Sheet",
+    "AT": "Airline Ticket",
+    "BEO": "Banquet Event Order",
+    "BW": "Budget Worksheet",
+    "CC": "Credit Card Authorization",
+    "CCC": "Car Confirmation Cancellation",
+    "CCL": "Catering Checklist",
+    "CR": "Check Request",
+    "DC": "Debarment Check",
+    "ENVT": "eInvite",
+    "EPHO": "EPHandout",
+    "EPMK": "EPMaterialKit",
+    "EPNVT": "EPInvite",
+    "EPPM": "EPPlacemat",
+    "EPPSTR": "EPPoster",
+    "EPSK": "EPSlidekit",
+    "EPTF": "EPTrifold",
+    "EPTY": "EPThankYou",
+    "ER": "Expense Report",
+    "FMVT": "Fair Market Value Tool",
+    "FMVTE": "Fair Market Value Tool Exception",
+    "HCC": "Hotel Confirmation Cancellation",
+    "HDA": "HonoDisputeAmendment",
+    "HO": "Handout",
+    "INV": "Invoice",
+    "ML": "Material Letter",
+    "MP": "Manual PIF",
+    "MSAPIF": "MovedSolvayAndroGelPIF",
+    "MSN": "Manual Speaker Nomination",
+    "NVT": "Handout",
+    "OSMC": "Off Site Meal Certification",
+    "PA": "ProgramAttestation",
+    "PAC": "ParticipantAnnualContract",
+    "PC": "ParticipantCheck",
+    "PCT": "Program Changes Travel",
+    "PDL": "Pharmaceutical Detailers License",
+    "PE": "ProgramException",
+    "PED": "PWExportDoc",
+    "PEF": "Participant Expense Form",
+    "PID": "PWImportDoc",
+    "PID2": "PWImportDoc2",
+    "PIF": "PIF",
+    "PPPE": "ProgramPolicyProcedureException",
+    "PRCK": "Program Check",
+    "PRMA": "PRM Approval",
+    "PSA": "PSA",
+    "PSAA": "PSA Addendum",
+    "PVM": "Program Vendor Menu",
+    "PW9": "PW9",
+    "RBW": "ReceiptBreakoutWorkpaper",
+    "RCAF": "RequestforConsultantApprovalForm",
+    "RCL": "Reservation Checklist",
+    "RCN": "Reservation Cancel Notice",
+    "RCT": "Receipt",
+    "RE": "ReinstatementException",
+    "RNVT": "RSVPInvite",
+    "RRCT": "RepReceipt",
+    "SAAP": "MSPASecondAddressAmendmentProof",
+    "SBSK": "SpeakerBuiltSlideKit",
+    "SCE": "SpeakerCapException",
+    "SC": "Speaker Check",
+    "SIS": "SignIn Sheet",
+    "SN": "Speaker Nomination",
+    "SNIDE": "SpeakerNomInitiationDateExcpt",
+    "SNVT": "SampleInvite",
+    "SPN": "Stop Payment Notification",
+    "SPTD": "SpeakerTrainingDeck",
+    "STD": "Save The Date",
+    "STTI": "SpkrTrainTravelItinerary",
+    "STTINV": "SpkrTrainTravelInvoice",
+    "STTRCT": "SpkrTrainTravelReceipt",
+    "TD": "TestingDoc",
+    "TI": "RTravelItinerary",
+    "TINV": "RTravelInvoice",
+    "TASINV": "Travel Agency Service Invoice",
+    "TPEA": "ThirdPartyEventApproval",
+    "TPGPSF": "General Program Support Form",
+    "TPSD": "Third Party Supporting Document",
+    "TRCT": "RTravelReceipt",
+    "TW": "TrainingWaiver",
+    "TYL": "Thank You Letter",
+    "VBEO": "VenueBEO",
+    "VC": "Venue Contract",
+    "VE": "Venue Exception",
+    "VM": "VendorMenu",
+    "W9": "W9"
+  },
+  "Companies": [
+    {
+      "Name": "AbbVieTrain",
+      "ConnectionStrings": [
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod1;database=AbbVieTrain2014;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=sqlprod1;database=AbbVieTrain2015;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=sqlprod1;database=AbbVieTrain2016;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=sqlprod1;database=AbbVieTrain2017;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=sqlprod1;database=AbbVieTrain2018;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=sqlprod1;database=AbbVieTrain2019;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbVieTrain/"
+    },
+    {
+      "Name": "ExactSciences",
+      "ConnectionStrings": [
+        {
+          "Name": "2019",
+          "Value": "server=SQL13;database=MEI2019;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "ExactSciences/"
+    },
+    {
+      "Name": "Abbott",
+      "ConnectionStrings": [
+        {
+          "Name": "2006",
+          "Value": "server=SQL1;database=Abbott2006;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2009",
+          "Value": "server=SQL1;database=Abbott2009;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2010",
+          "Value": "server=SQL1;database=Abbott2010;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2011",
+          "Value": "server=sqlprod1;database=Abbott2011;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod1;database=Abbott2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2013",
+          "Value": "server=sqlprod1;database=Abbott2013;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod1;database=Abbott2014;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=sqlprod1;database=Abbott2015;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=sqlprod1;database=Abbott2016;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=sqlprod1;database=Abbott2017;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=sqlprod1;database=Abbott2018;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=sqlprod1;database=Abbott2019;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2020",
+          "Value": "server=sqlprod1;database=Abbott2020;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "Abbot/"
+    },
+    {
+      "Name": "AbbottDIV",
+      "ConnectionStrings": [
+        {
+          "Name": "2018",
+          "Value": "server=SQL10;database=AbbottDIV2018;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=SQL10;database=AbbottDIV2018;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "StructuralHeart/"
+    },
+    {
+      "Name": "AbbVieImm",
+      "ConnectionStrings": [
+        {
+          "Name": "2012DEV",
+          "Value": "server=SQLDEV2;database=AbbvieImm2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2012",
+          "Value": "server=SQL1;database=AbbvieImm2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbvieImmunology/"
+    },
+    {
+      "Name": "Alkermes",
+      "ConnectionStrings": [
+        {
+          "Name": "2015",
+          "Value": "server=sqlprod3;database=Alkermes2015;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=sqlprod3;database=Alkermes2016;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=sqlprod3;database=Alkermes2017;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=sqlprod3;database=Alkermes2018;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "Alkermes/"
+    },
+    {
+      "Name": "Ross",
+      "ConnectionStrings": [
+        {
+          "Name": "2009",
+          "Value": "server=SQL1;database=Ross2009;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2010",
+          "Value": "server=SQL1;database=Ross2010;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2011",
+          "Value": "server=SQL1;database=Ross2011;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=Ross2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2013",
+          "Value": "server=sqlprod2;database=Ross2013;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod2;database=Ross2014;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=sqlprod2;database=Ross2015;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=sqlprod2;database=Ross2016;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=sqlprod2;database=Ross2017;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=sqlprod2;database=Ross2018;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=sqlprod2;database=Ross2019;User ID=MEIDocs;Password=codynuttis911"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottNutrition/"
+    },
+    {
+      "Name": "Solvay",
+      "ConnectionStrings": [
+        {
+          "Name": "2009",
+          "Value": "server=SQL1;database=Solvay2009;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2010",
+          "Value": "server=SQL1;database=Solvay2010;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "Solvay/"
+    },
+    {
+      "Name": "LabDevelopment",
+      "ConnectionStrings": [
+      ],
+      "SiteRelativeUrl": "LabDevelopment"
+    },
+    {
+      "Name": "AbbottNutritionCE",
+      "ConnectionStrings": [
+        {
+          "Name": "2010",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2011",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2011;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2012",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2013",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2013;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2014;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2015;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2016;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2017;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2018;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=ADVSQL1;database=AbbottNutritionCE2019;User ID=MEIDocs;Password=codynuttis911"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottNutritionCE/"
+    },
+    {
+      "Name": "Kowa",
+      "ConnectionStrings": [
+        {
+          "Name": "2010",
+          "Value": "server=SQL4;database=Kowa2010;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2011",
+          "Value": "server=SQL4;database=Kowa2011;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2012",
+          "Value": "server=SQL4;database=Kowa2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2013",
+          "Value": "server=SQL4;database=Kowa2013;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=SQL4;database=Kowa2014;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=SQL4;database=Kowa2015;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=SQL4;database=Kowa2016;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=SQL4;database=Kowa2017;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=SQL4;database=Kowa2018;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=SQL4;database=Kowa2019;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "KowaSite/"
+    },
+    {
+      "Name": "LipoScience",
+      "ConnectionStrings": [
+        {
+          "Name": "2010",
+          "Value": "server=sqlprod1;database=LipoScience2010;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2011",
+          "Value": "server=sqlprod1;database=LipoScience2011;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "LipoScience/"
+    },
+    {
+      "Name": "PPG",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "PPG/"
+    },
+    {
+      "Name": "PPD",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "PPD/"
+    },
+    {
+      "Name": "AM",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottMolecular/"
+    },
+    {
+      "Name": "GPRD",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "GPRD/"
+    },
+    {
+      "Name": "GSMS",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "GSMS/"
+    },
+    {
+      "Name": "AAH",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottAnimalHealth/"
+    },
+    {
+      "Name": "ADC",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottDiabetesCare/"
+    },
+    {
+      "Name": "ADD",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottDiagnosticsDivision/"
+    },
+    {
+      "Name": "AMO",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottMedicalOptics/"
+    },
+    {
+      "Name": "DAN",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "DivAbbottNutrition/"
+    },
+    {
+      "Name": "APOC",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottPointofCare/"
+    },
+    {
+      "Name": "AV",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottVascular/"
+    },
+    {
+      "Name": "CORP",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "Corporate/"
+    },
+    {
+      "Name": "EPD",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "EstablishedProductsDivision/"
+    },
+    {
+      "Name": "RA",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "RegulatoryAffairsPPG/"
+    },
+    {
+      "Name": "RDT",
+      "ConnectionStrings": [
+        {
+          "Name": "2013",
+          "Value": "server=SQL4;database=RDT2013;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "RDT/"
+    },
+    {
+      "Name": "Quest",
+      "ConnectionStrings": [
+        {
+          "Name": "2013",
+          "Value": "server=SQL4;database=Berkeley2011;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=SQL4;database=Quest2014;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2015",
+          "Value": "server=SQL4;database=Quest2015;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2016",
+          "Value": "server=SQL4;database=Quest2016;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2017",
+          "Value": "server=SQL4;database=Quest2017;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2018",
+          "Value": "server=SQL4;database=Quest2018;User ID=MEIDocs;Password=codynuttis911"
+        },
+        {
+          "Name": "2019",
+          "Value": "server=SQL4;database=Quest2019;User ID=MEIDocs;Password=codynuttis911"
+        }
+      ],
+      "SiteRelativeUrl": "Quest/"
+    },
+    {
+      "Name": "ARDx",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "AbbottRapidDiagnostics/"
+    },
+    {
+      "Name": "CAHF",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod2;database=FMV2014;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "CAHF/"
+    },
+    {
+      "Name": "NM",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod2;database=FMV2014;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "Neuromodulation/"
+    },
+    {
+      "Name": "SH",
+      "ConnectionStrings": [
+        {
+          "Name": "2012",
+          "Value": "server=sqlprod2;database=FMV2012;User ID=MEIDocs;Password=codynuttis911;"
+        },
+        {
+          "Name": "2014",
+          "Value": "server=sqlprod2;database=FMV2014;User ID=MEIDocs;Password=codynuttis911;"
+        }
+      ],
+      "SiteRelativeUrl": "SH/"
+    }
+  ]
+}

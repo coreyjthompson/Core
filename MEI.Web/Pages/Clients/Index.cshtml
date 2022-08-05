@@ -1,0 +1,122 @@
+﻿@page
+@model Clients.IndexModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Clients";
+}
+
+@section MainLayoutPageHeader {
+    <div class="d-flex flex-row justify-content-between">
+        <div class="">
+            <h2 class="page-head-title">All Clients</h2>
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb page-head-nav">
+                    <li class="breadcrumb-item"><a asp-page="~/Home/Index">Home</a></li>
+                    <li class="breadcrumb-item"><a asp-page="/Client/Index">Clients</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+}
+<div class="container p-0">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-full-btn" role="button" id="clients_clientDeck_card_btn_add" style="height: 400px;">
+                <div class="card-body text-center">
+                    <i class="icon mdi mdi-plus-circle-o"></i>
+                </div>
+            </div>
+        </div>
+
+        @foreach(var card in Model.Cards)
+        {
+            <div class="col-md-3">
+                <div class="card @card.CssClass">
+                    <div class="card-img-top" style="height: 200px; padding-top: 37px;">
+                        <div class="initials" >
+                            <b>@card.Initials</b>
+                        </div>
+                    </div>
+                    <div class="card-body" style="height: 200px;">
+                        <h5 class="card-title">@card.Name</h5>
+                        <p class="card-text">
+                            <address>
+                                <b>@card.StreetAddressLine1</b><br />
+                                @card.StreetAddressLine2<br />
+                                @card.CityTown, @card.StateProvince @card.PostalCode<br />
+                                @card.TollFreePhoneNumber<br />
+                            </address>
+                        </p>
+                        <p class="card-text"><small class="text-muted">@card.WebsiteUrl</small></p>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+
+</div>
+@*<div class="card card-table">
+    <header class="card-header">
+        Invoice Table Header
+        <div class="tools dropdown">
+            <span class="icon mdi mdi-download"></span><a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown"><span class="icon mdi mdi-more-vert"></span></a>
+            <div class="dropdown-menu" role="menu">
+                <a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Separated link</a>
+            </div>
+        </div>
+    </header>
+    <div class="card-body">
+
+        <ejs-grid id="invoice_allClients_grid" dataSource="Model.Clients" allowPaging="true" allowFiltering="true" allowSorting="true" allowSelection="true" rowSelected="onRowSelected">
+            <e-grid-filterSettings type="Excel"></e-grid-filterSettings>
+            <e-grid-pagesettings pageCount="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column field="Name" headerText="Name"></e-grid-column>
+                <e-grid-column field="GotoUrl" headerText="GoTo" visible="false"></e-grid-column>
+                <e-grid-column field="Status" headerText="Status" template="#invoice_allClients_grid_columnTemplate1" textAlign="Right"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>*@
+
+<ejs-toast id="toast_type">
+    <e-toast-position X="Right" Y="Bottom"></e-toast-position>
+</ejs-toast>
+
+@section MainScriptSection{
+    <script>
+        // client
+        let onRowSelected = function (args) {
+            window.location.href = args.data.GotoUrl;
+        };
+
+        let showNotification = function (title, content, css, icon) {
+            var toasts = [{ title: title, content: content, cssClass: css, icon: icon }];
+            setTimeout(
+                () => {
+                    var toastObj = document.getElementById('toast_type').ej2_instances[0];
+                    toastObj.target = document.body;
+                    toastObj.show(toasts[0]);
+                }, 100);
+        }
+
+        let goToClientAddPage = function () {
+            window.location.href = 'Client/Create/';
+        };
+
+        document.getElementById('clients_clientDeck_card_btn_add').addEventListener('click', goToClientAddPage);
+
+    </script>
+    @if (Model.Notification != null && !string.IsNullOrEmpty(Model.Notification.Content))
+    {
+        <script>
+        showNotification('@Model.Notification.Title', '@Model.Notification.Content', '@Model.Notification.Css', '@Model.Notification.Icon');
+        </script>
+    }
+
+    <script type="text/x-jsrender" id="invoice_allClients_grid_columnTemplate1">
+        <span class="badge ${StatusCssClass}">${Status}</span>
+    </script>
+
+}

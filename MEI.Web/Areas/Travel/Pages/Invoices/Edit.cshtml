@@ -1,0 +1,46 @@
+﻿@page "{id}"
+
+@model MEI.Web.Areas.Travel.Pages.Invoices.EditModel
+@{
+    ViewData["CurrentlySelectedLinkTitle"] = "Invoices";
+    ViewData["CurrentPageTitle"] = "Edit Invoice";
+}
+
+@section PageHeader {
+    <h2 class="page-head-title">@ViewData["CurrentPageTitle"]</h2>
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb page-head-nav">
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Index">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a asp-area="Travel" asp-page="/Invoices/Index">Invoices</a>
+            </li>
+            <li class="breadcrumb-item active">
+                <a href="#">No. @Model.TravelInvoice.InvoiceNumber</a>
+            </li>
+        </ol>
+    </nav>
+}
+
+<vc:status-alert-banner workflow-steps="@Model.TravelInvoice.WorkflowSteps"></vc:status-alert-banner>
+@{
+    // cthompson:11.6.2019 - If we dont clear the list it errors in the blazor - i dont know why so this is a short time fix
+    Model.TravelInvoice.WorkflowSteps.Clear();
+}
+@* render the blazor component *@
+<component type="typeof(InvoiceFormFields)" render-mode="Server" param-TravelInvoice="@Model.TravelInvoice"/>
+
+@section BlazorScripts{
+    <script src="~/_framework/blazor.server.js"></script>
+}
+
+@section ScriptSection{
+    <script src="~/js/meiAbbViePortal/common.js" type="text/javascript"></script>
+    <script src="~/js/meiAbbViePortal/ui.js" type="text/javascript"></script>
+    <script src="~/js/meiAbbViePortal/travel.js" type="text/javascript"></script>
+
+    <script>
+        meiAbbViePortal.ui.statusBanner.prototype.init();
+    </script>
+}
